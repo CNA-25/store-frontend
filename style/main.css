@@ -1,0 +1,45 @@
+body {
+    background-color: rgb(90, 85, 85);
+    
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.flexed {
+    height: 250px;
+    width: 200px;
+    background-color: red;
+}
+
+#beer1 {
+    background-image: url("/media/Sauna\ Session\ ale3.jpg");
+    background-size: cover;
+}
+#beer2 {
+    background-image: url("/media/Midsummer\ Wheat1.jpg");
+    background-size: cover;
+}
+#beer3 {
+    background-image: url("/media/Lapland\ Midnight\ Black\ IPA2.jpg");
+    background-size: cover;
+}
+
+.title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ordernow-big {
+    height: 80px;
+    width: 300px;
+    background-color: brown;
+    border-radius: 10px;
+    border: none;
+    color: rgb(219, 212, 212);
+    font-size: 42px;
+    margin-top: 50px;
+}
