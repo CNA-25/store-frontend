@@ -8,6 +8,15 @@ body {
     justify-content: space-evenly;
 }
 
+#shopping-cart-btn {
+    margin-left: auto;
+}
+
+#header {
+    display: flex;
+    flex-direction: row;
+}
+
 .flexed {
     height: 250px;
     width: 200px;

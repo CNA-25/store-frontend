@@ -1,0 +1,29 @@
+#full-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#left-side-cart {
+    display: flex;
+    flex-direction: column;
+    
+    border: 2px solid black;
+}
+
+#right-side-cart {
+    display: flex;
+    border: 2px solid black;
+}
+
+.shopped-item {
+    width: 500px;
+    height: 350px;
+    background-color: aqua;
+}
+.cart-info {
+    
+}
+
+.place-holder-items {
+
+}
