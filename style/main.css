@@ -40,15 +40,15 @@ body {
     background-color: red;
 }
 
-#beer1 {
+#saunaSessionAle {
     background-image: url("/media/Sauna\ Session\ ale3.jpg");
     background-size: cover;
 }
-#beer2 {
+#midsummerWheat {
     background-image: url("/media/Midsummer\ Wheat1.jpg");
     background-size: cover;
 }
-#beer3 {
+#midnightBlackIPA {
     background-image: url("/media/Lapland\ Midnight\ Black\ IPA2.jpg");
     background-size: cover;
 }

@@ -1,25 +1,14 @@
-#full-container {
+#cart-container {
     display: flex;
     flex-direction: column;
+    width: 70%;
+    margin: auto;
 }
 
-#left-side-cart {
-    display: flex;
-    flex-direction: column;
+#cart-items-container {
     
-    border: 2px solid black;
 }
 
-#right-side-cart {
-    display: flex;
-    border: 2px solid black;
-}
-
-.shopped-item {
-    width: 500px;
-    height: 350px;
-    background-color: aqua;
-}
 .cart-info {
     
 }
