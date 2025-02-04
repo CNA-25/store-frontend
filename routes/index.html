@@ -25,14 +25,37 @@
     </div>
 
     <!--DISPLAYED BEERS-->
-    <div class="flex-container">
-        <div class="flexed-beers" id="saunaSessionAle"></div>
-        <div class="flexed-beers" id="midsummerWheat"></div>
-        <div class="flexed-beers" id="midnightBlackIPA"></div>
+    <div id="flex-beers-container">
+        <div class="flexed-beers" id="saunaSessionAle">
+            <p>Sauna Session Ale</p>
+            <p>Add to Cart</p>
+        </div>
+        <div class="flexed-beers" id="midsummerWheat">
+            <p>Midsummer Wheat</p>
+            <p>Add to Cart</p>
+        </div>
+        <div class="flexed-beers" id="midnightBlackIPA">
+            <p>Midnight Black IPA</p>
+            <p>Add to Cart</p>
+        </div>
     </div>
+    <!--toast for adding item to cart-->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="toast-header">
+            <img src="..." class="rounded me-2" alt="">
+            <strong class="me-auto">My Shopping Cart</strong>
+            <small>Just now</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+          <div class="toast-body">
+            Item added to cart.
+          </div>
+        </div>
+    </div>      
     
     <!--ORDER NOW BUTTON-->
-    <div class="flex-container">
+    <div id="big-buy-btn-container">
         <!-- Button trigger modal -->
         <button  type="button" class="btn custom-btn-big" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Buy 100 beers.

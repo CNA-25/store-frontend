@@ -1,5 +1,7 @@
 console.log("addToCart.js")
 
+// BROWSE BEERS
+
 // front page beers as add to shopping cart/buy buttons
 saunaSessionAle = document.querySelector('#saunaSessionAle')
 midsummerWheat = document.querySelector('#midsummerWheat')
@@ -15,10 +17,28 @@ function beerButtons(beerName) {
         console.log("click on " + beerName.id)
         // add a beer to the localstorage, else create the localstorage
         if (localStorage.getItem(beerName.id)){
+            // handle localstorage
             localStorage.setItem(beerName.id, Number(localStorage.getItem(beerName.id)) + 1) 
+            //handle toast to notify user of adding to cart
+            handleToast(beerName)
         }
-        else localStorage.setItem(beerName.id, 1) 
+        else {
+            localStorage.setItem(beerName.id, 1) 
+            //handle toast to notify user of adding to cart
+            handleToast(beerName)
+        }
     })    
 }
 // loop through beers and use function on them 
 beers.forEach(beerButtons)
+
+// FUNCTION FOR HANDLE TOAST NOTIFICATION FOR ADDING TO CART
+function handleToast(beer) {
+    const toastTrigger = beer
+    const toastLiveExample = document.getElementById('liveToast')
+
+    if (toastTrigger) {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        toastBootstrap.show()
+    }
+}
