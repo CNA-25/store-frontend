@@ -1,7 +1,7 @@
 # store-frontend
 store frontend
 
-Niklas - köpkorg/wishlist - (bransch = savonhen-dev)
+- Niklas - köpkorg/wishlist - (bransch = savonhen-dev)
 
 - Bläddra bland produkter
 - login
