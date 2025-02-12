@@ -1,6 +1,6 @@
 # store-frontend
 store frontend
 
-Niklas - köpkorg
+Niklas - köpkorg/wishlist - (bransch = savonhen-dev)
 
 Webhook implemented - test.
