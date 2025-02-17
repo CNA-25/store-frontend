@@ -20,7 +20,7 @@
 
             const email = document.getElementById("email").value;
             const password = document.getElementById("password").value;
-            const api_url = "url"; // byt till rätt backend url
+            const api_url = " https://user-service-api-user-service.2.rahtiapp.fi"; // byt till rätt backend url
 
             try {
                 const response = await fetch(api_url, {
@@ -45,7 +45,7 @@
                 const token = data.access; // jwt token från backend
 
                 localStorage.setItem("jwt", "Bearer " + token); 
-                window.location.href = ".html"; // byt till rätt sida
+                window.location.href = "./cart.html"; // byt till rätt sida
 
             } catch (error) {
                 console.error("Login failed:", error.message);
