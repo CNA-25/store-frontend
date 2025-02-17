@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeerCraft</title>
+</head>
+<body>
+    <h1>Welcome to BeerCraft!</h1><br>
+    <h3>Login here:</h3>
+    <form id="login-form">
+        <input type="email" id="email" placeholder="Email:" required><br>
+        <input type="password" id="password" placeholder="Password:" required><br>
+        <input type="submit" value="Login">
+    </form>
+
+    <script>
+        document.getElementById("login-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const api_url = "url"; // byt till rätt backend url
+
+            try {
+                const response = await fetch(api_url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error("User not found.");
+                    } else if (response.status === 401) {
+                        throw new Error("Invalid credentials.");
+                    } else {
+                        throw new Error("Something went wrong.");
+                    }
+                }
+
+                const data = await response.json(); // svar från servern
+                const token = data.access; // jwt token från backend
+
+                localStorage.setItem("jwt", "Bearer " + token); 
+                window.location.href = ".html"; // byt till rätt sida
+
+            } catch (error) {
+                console.error("Login failed:", error.message);
+                alert(error.message);
+            }
+        });
+    </script>
+</body>
+</html>
