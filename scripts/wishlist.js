@@ -1,4 +1,4 @@
-console.log("shoppingCart.js")
+console.log("wishlist.js")
 
 // FUNCTION FOR CREATING THE CART LIST ELEMENTS
 function createCartItem(title, content, amount) {
@@ -14,6 +14,7 @@ function createCartItem(title, content, amount) {
             ${content}
         </div>
         <button class="btn btn-danger">Remove</button>
+        <button class="btn btn-success">Add to cart</button>
         <span class="badge text-bg-primary rounded-pill">${amount}</span>
     `
 
@@ -23,11 +24,11 @@ function createCartItem(title, content, amount) {
 // ADD ALL ITEMS FROM LOCAL STORAGE TO LIST
 
 //  localstorage keys: all beers as strings (HARDCODED) 
-const beers = ["saunaSessionAle", "midsummerWheat", "midnightBlackIPA"]
+const wishlistBeers = ["WL-saunaSessionAle", "WL-midsummerWheat", "WL-midnightBlackIPA"]
 
 // function getting the cart items from the local storage and createCartItem with them
-function addCartItems(beers) {
-    beers.forEach(beer => {
+function addWishlistItems(wishlistBeers) {
+    wishlistBeers.forEach(beer => {
         if (localStorage.getItem(beer)) {
             storagedBeer = localStorage.getItem(beer)
             createCartItem(beer, 100 + "€", storagedBeer)
@@ -35,12 +36,12 @@ function addCartItems(beers) {
         }
     })    
 }
-addCartItems(beers)
+addWishlistItems(wishlistBeers)
 
 // CLEAR/EMPTY CART BUTTON
-emtpyCartBtn = document.querySelector('#empty-cart-btn')
+emtpyCartBtn = document.querySelector('#empty-wishlist-btn')
 //add eventlistener to clear localstorage
 emtpyCartBtn.addEventListener('click', ()=> {
-    localStorage.clear()
+    ["WL-saunaSessionAle", "WL-midsummerWheat", "WL-midnightBlackIPA"].forEach(item => localStorage.removeItem(item))
     location.reload()
 })
