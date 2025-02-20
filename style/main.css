@@ -10,13 +10,18 @@ body {
 }
 
 /* HEADER */
+.header {
+    display: flex;
+    flex-direction: row;
+    background-color: #301E10;
+}
 .header-menu-icons {
     font-size: 2rem;
     color: #fff;
     font-family: 'Rubik-font';
     text-decoration-line: none;
 }
-#shopping-cart-icon {
+#cart_wishlist_icons {
     margin-left: auto;
     margin-right: 7rem;
 }
@@ -24,11 +29,10 @@ body {
     margin-right: auto;
     margin-left: 7rem;
 }
-.header {
-    display: flex;
-    flex-direction: row;
-    background-color: #301E10;
+#wishlist-icon {
+    margin-right: 2rem;
 }
+
 /* DISPLAY/BUY BEERS */
 #flex-beers-container {
     display: flex;
