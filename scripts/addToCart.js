@@ -14,7 +14,6 @@ const beers = [saunaSessionAle, midsummerWheat, midnightBlackIPA]
 // function for adding eventlisteners to beers
 function beerButtons(beerName) {
     beerName.addEventListener('click', ()=> {
-        console.log("click on " + beerName.id)
         // add a beer to the localstorage, else create the localstorage
         if (localStorage.getItem(beerName.id)){
             // handle localstorage

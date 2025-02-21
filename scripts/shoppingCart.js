@@ -31,7 +31,6 @@ function addCartItems(beers) {
         if (localStorage.getItem(beer)) {
             storagedBeer = localStorage.getItem(beer)
             createCartItem(beer, 100 + "€", storagedBeer)
-            console.log(storagedBeer)
         }
     })    
 }

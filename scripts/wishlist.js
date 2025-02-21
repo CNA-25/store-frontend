@@ -10,15 +10,28 @@ function createCartItem(title, content, amount) {
     // list item content 
     listItem.innerHTML = `
         <div class="ms-2 me-auto">
-            <div class="fw-bold">${title}</div>
+            <div class="fw-bold beer-title">${title}</div>
             ${content}
         </div>
-        <button class="btn btn-danger">Remove</button>
-        <button class="btn btn-success">Add to cart</button>
+        <button class="btn btn-danger remove-from-wl-btn">Remove</button>
+        <button class="btn btn-success wl-to-cart-btn">Add to cart</button>
         <span class="badge text-bg-primary rounded-pill">${amount}</span>
     `
-
     bsList.appendChild(listItem)
+    
+    // Attach event listeners to buttons immediately
+    // REMOVE ONE
+    listItem.querySelector('.remove-from-wl-btn').addEventListener('click', () => {
+        console.log(`Removed: ${title}`)
+        // remove one from wishlist
+        if (localStorage.getItem(title)) localStorage.setItem(title, Number(localStorage.getItem(title)) - 1)
+    })
+    // ADD ONE
+    listItem.querySelector('.wl-to-cart-btn').addEventListener('click', () => {
+        console.log(`Added to cart: ${title}`)
+        if (localStorage.getItem(title)) localStorage.setItem(title, Number(localStorage.getItem(title)) + 1)
+        else localStorage.setItem(title, 1)
+    })
 }
 
 //  localstorage keys: all beers as strings (HARDCODED) 
@@ -28,9 +41,8 @@ const wishlistBeers = ["WL-saunaSessionAle", "WL-midsummerWheat", "WL-midnightBl
 function addWishlistItems(wishlistBeers) {
     wishlistBeers.forEach(beer => {
         if (localStorage.getItem(beer)) {
-            storagedBeer = localStorage.getItem(beer)
-            createCartItem(beer.slice(3), 100 + "€", storagedBeer)
-            console.log(storagedBeer)
+            wlBeerVal = localStorage.getItem(beer)
+            createCartItem(beer.slice(3), 100 + "€", wlBeerVal)
         }
     })    
 }
@@ -64,9 +76,6 @@ document.querySelector('#add-all-wishlist-btn').addEventListener('click', ()=> {
         }
     })     
 })
-
-// ADD ONE wlBeer TO CART
-
 
 // TO DO:
 // - remove invidual items

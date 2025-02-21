@@ -8,6 +8,11 @@ body {
     flex-direction: column;
     align-items: center;
 }
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 
 /* HEADER */
 .header {
