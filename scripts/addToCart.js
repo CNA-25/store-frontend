@@ -1,35 +1,51 @@
 console.log("addToCart.js")
+//HARDCODED USERID
+const userId = 1 // Replace with actual user ID
+const jwt = "header.payload.secret" // Replace with actual JWT token
 
-// BROWSE BEERS
+// Function to add to cart with API fetch
+async function addItemToCart(userId, productId, quantity = 1) {
+    const url = `http://localhost:8000/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`;
 
-// front page beers as add to shopping cart/buy buttons
-saunaSessionAle = document.querySelector('#saunaSessionAle')
-midsummerWheat = document.querySelector('#midsummerWheat')
-midnightBlackIPA = document.querySelector('#midnightBlackIPA')
-
-// list of beers so that we can add easily more beers as nessecary
-const beers = [saunaSessionAle, midsummerWheat, midnightBlackIPA]
-
-// add beer to cart ( LOCAL STORAGE )
-// function for adding eventlisteners to beers
-function beerButtons(beerName) {
-    beerName.addEventListener('click', ()=> {
-        // add a beer to the localstorage, else create the localstorage
-        if (localStorage.getItem(beerName.id)){
-            // handle localstorage
-            localStorage.setItem(beerName.id, Number(localStorage.getItem(beerName.id)) + 1) 
-            //handle toast to notify user of adding to cart
-            handleToast(beerName)
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            //"Authorization": `${jwt}`, // Send token in header
+            'Content-Type': 'application/json'
         }
-        else {
-            localStorage.setItem(beerName.id, 1) 
-            //handle toast to notify user of adding to cart
-            handleToast(beerName)
-        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Error Data:', errorData)
+        throw new Error(`Failed to add item: ${response.statusText} - ${JSON.stringify(errorData)}`)
+    }
+
+    return response.json() // Return the response data
+}
+
+// Function to UI buttons to add beer to cart
+function addBeerBtn(beerIds, beers) {
+    beers.forEach((beer, index)=> {
+        beer.addEventListener('click', () => {
+            // use function for making api call to add to cart
+            addItemToCart(1, beerIds[index], 1)
+                //for dev purposes
+                //.then(data => console.log('Item added:', data))
+                //.catch(error => console.error('Error:', error))
+            //toast to notify of action
+            handleToast(beer)
+        })
     })    
 }
-// loop through beers and use function on them 
-beers.forEach(beerButtons)
+// HARDCODED BEERS
+const saunaSessionAle = document.querySelector('#saunaSessionAle')
+const midsummerWheat = document.querySelector('#midsummerWheat')
+const midnightBlackIPA = document.querySelector('#midnightBlackIPA')
+beers = [saunaSessionAle, midsummerWheat, midnightBlackIPA]
+
+beerIds = [1, 2, 3] // hardcoded beerid
+addBeerBtn(beerIds, beers)
 
 // FUNCTION FOR HANDLE TOAST NOTIFICATION FOR ADDING TO CART
 function handleToast(beer) {
@@ -41,3 +57,21 @@ function handleToast(beer) {
         toastBootstrap.show()
     }
 }
+
+// Function to get all available beers
+async function getAllBeers() {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/beers/", {
+            method: "GET",
+            headers: {
+                //"Authorization": `${jwt}`, // Send token in header
+                "Content-Type": "application/json"
+            }
+        })
+        const data = await response.json()
+        console.log(data)
+    } catch (error) {
+        console.error("Failed to fetch beers:", error)
+    }
+}
+//getAllBeers()

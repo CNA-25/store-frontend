@@ -1,9 +1,9 @@
-console.log("wishlist.js")
+console.log("wishlist.js");
 
-// FUNCTION FOR CREATING THE CART LIST ELEMENTS
-function createCartItem(title, content, amount) {
+// Function for creating the cart list elements
+function createCartItem(title, content, userId, sku) {
     // the bootstrap list
-    bsList = document.querySelector("#cart-items-container ol")
+    const bsList = document.querySelector("#cart-items-container ol")
     // create list element
     const listItem = document.createElement("li")
     listItem.className = "list-group-item d-flex justify-content-between align-items-start"
@@ -15,70 +15,118 @@ function createCartItem(title, content, amount) {
         </div>
         <button class="btn btn-danger remove-from-wl-btn">Remove</button>
         <button class="btn btn-success wl-to-cart-btn">Add to cart</button>
-        <span class="badge text-bg-primary rounded-pill">${amount}</span>
     `
     bsList.appendChild(listItem)
     
     // Attach event listeners to buttons immediately
     // REMOVE ONE
-    listItem.querySelector('.remove-from-wl-btn').addEventListener('click', () => {
+    listItem.querySelector('.remove-from-wl-btn').addEventListener('click', async () => {
         console.log(`Removed: ${title}`)
         // remove one from wishlist
-        if (localStorage.getItem(title)) localStorage.setItem(title, Number(localStorage.getItem(title)) - 1)
+        await removeFromWishlist(userId, sku)
+        listItem.remove();
     })
     // ADD ONE
-    listItem.querySelector('.wl-to-cart-btn').addEventListener('click', () => {
+    listItem.querySelector('.wl-to-cart-btn').addEventListener('click', async () => {
         console.log(`Added to cart: ${title}`)
-        if (localStorage.getItem(title)) localStorage.setItem(title, Number(localStorage.getItem(title)) + 1)
-        else localStorage.setItem(title, 1)
+        await addItemToCart(userId, 1, 1) //HARDCODED PRODUCT ID (fix: sku != product_id)
+        // remove from wishlist
+        removeFromWishlist(userId, sku)
+        listItem.remove()
     })
 }
 
-//  localstorage keys: all beers as strings (HARDCODED) 
-const wishlistBeers = ["WL-saunaSessionAle", "WL-midsummerWheat", "WL-midnightBlackIPA"]
-
-// FUNCTION FOR GETTING LOCALSTORAGE AND CREATING WITH createCartItem()
-function addWishlistItems(wishlistBeers) {
-    wishlistBeers.forEach(beer => {
-        if (localStorage.getItem(beer)) {
-            wlBeerVal = localStorage.getItem(beer)
-            createCartItem(beer.slice(3), 100 + "€", wlBeerVal)
+// Function to fetch wishlist items from the server
+async function fetchWishlistItems(userId) { //https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/
+    const url = `http://localhost:8001/wishlist/${userId}`
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        if (!response.ok) {
+            throw new Error(`Failed to fetch wishlist items: ${response.statusText}`)
         }
-    })    
+        const data = await response.json()
+        return data.wishlist
+    } catch (error) {
+        console.error('Error fetching wishlist items:', error)
+        return []
+    }
 }
-addWishlistItems(wishlistBeers)
 
-// CLEAR/EMPTY CART BUTTON
-emtpyCartBtn = document.querySelector('#empty-wishlist-btn')
-//add eventlistener to clear localstorage
-emtpyCartBtn.addEventListener('click', ()=> {
-    ["WL-saunaSessionAle", "WL-midsummerWheat", "WL-midnightBlackIPA"].forEach(item => localStorage.removeItem(item))
+// Function to remove item from wishlist
+async function removeFromWishlist(userId, sku) { //https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/
+    const url = `http://localhost:8001/wishlist/${userId}/${sku}`
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            const errorData = await response.json()
+            console.error('Error Data:', errorData)
+            throw new Error(`Failed to remove item from wishlist: ${response.statusText}`)
+        }
+        const data = await response.json()
+        console.log(data.message)
+    } catch (error) {
+        console.error('Error removing item from wishlist:', error)
+    }
+}
+// Function to add to cart with API fetch
+async function addItemToCart(userId, productId, quantity = 1) {
+    const url = `http://localhost:8000/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (!response.ok) {
+        const errorData = await response.json()
+        console.error('Error Data:', errorData)
+        throw new Error(`Failed to add item: ${response.statusText} - ${JSON.stringify(errorData)}`);
+    }
+    return response.json() // Return the response data
+}
+
+// Function to add wishlist items to the list
+async function addWishlistItems(userId) {
+    const wishlistItems = await fetchWishlistItems(userId)
+    console.log(wishlistItems)
+    wishlistItems.forEach(item => {
+        createCartItem(item.name, item.description, userId, item.sku)
+    });
+}
+// Initialize the wishlist
+const userId = 1 // Replace with actual user ID
+addWishlistItems(userId)
+
+// Clear whole wishlist button functionality
+const emptyWishlistBtn = document.querySelector('#empty-wishlist-btn')
+// Add event listener to clear wishlist
+emptyWishlistBtn.addEventListener('click', async () => {
+    const wishlistItems = await fetchWishlistItems(userId)
+    for (const item of wishlistItems) {
+        await removeFromWishlist(userId, item.sku)
+    }
     location.reload()
 })
 
-// ADD ALL wlBeer TO CART
-document.querySelector('#add-all-wishlist-btn').addEventListener('click', ()=> {
-    // loop through all beers and get if exsist in local storage
-    ["WL-saunaSessionAle", "WL-midsummerWheat", "WL-midnightBlackIPA"].forEach((wlBeer) => {
-        if (localStorage.getItem(wlBeer)) {
-            // remove wl- from name and add to localstorage (cart)
-            cartBeer = wlBeer.slice(3)
-            cartBeerVal = Number(localStorage.getItem(cartBeer))
-            wlBeerVal = Number(localStorage.getItem(wlBeer))
-            if (localStorage.getItem(cartBeer)) {
-                // item already exsists in cart, add more
-                localStorage.setItem(cartBeer, cartBeerVal + wlBeerVal)
-            } else localStorage.setItem(cartBeer, wlBeerVal)
-            // remove items from wishlist
-            localStorage.removeItem(wlBeer)
-            // show results /refresh page
-            location.reload()
-        }
-    })     
+// Add whole wishlist to cart button functionality
+document.querySelector('#add-all-wishlist-btn').addEventListener('click', async () => {
+    const wishlistItems = await fetchWishlistItems(userId)
+    wishlistItems.forEach(item => {
+        // Add to cart logic here
+        console.log(`Added to cart: ${item.name}`)
+        // Remove from wishlist
+        removeFromWishlist(userId, item.sku)
+    })
+    location.reload()
 })
-
-// TO DO:
-// - remove invidual items
-// - modal to added to wishlist, not cart
-// - add to cart buttons
-// - toast pop up message

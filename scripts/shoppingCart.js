@@ -1,13 +1,14 @@
-console.log("shoppingCart.js")
+console.log("shoppingCart.js");
 
-// FUNCTION FOR CREATING THE CART LIST ELEMENTS
-function createCartItem(title, content, amount) {
-    // the bootstrap list
-    bsList = document.querySelector("#cart-items-container ol")
-    // create list element
+//HARDCODED USERID
+const userId = 1 // Replace with actual user ID
+const jwt = "header.payload.secret" // Replace with actual JWT token
+
+// Function to create a cart item UI element
+function createCartItemUI(title, content, amount) {
+    const bsList = document.querySelector("#cart-items-container ol")
     const listItem = document.createElement("li")
     listItem.className = "list-group-item d-flex justify-content-between align-items-start"
-    // list item content 
     listItem.innerHTML = `
         <div class="ms-2 me-auto">
             <div class="fw-bold">${title}</div>
@@ -16,30 +17,100 @@ function createCartItem(title, content, amount) {
         <button class="btn btn-danger">Remove</button>
         <span class="badge text-bg-primary rounded-pill">${amount}</span>
     `
-
     bsList.appendChild(listItem)
+
+    // enable buttons
+    document.querySelector('#empty-cart-btn').disabled = false
+    document.querySelector('#checkout-btn').disabled = false
 }
 
-// ADD ALL ITEMS FROM LOCAL STORAGE TO LIST
-
-//  localstorage keys: all beers as strings (HARDCODED) 
-const beers = ["saunaSessionAle", "midsummerWheat", "midnightBlackIPA"]
-
-// function getting the cart items from the local storage and createCartItem with them
-function addCartItems(beers) {
-    beers.forEach(beer => {
-        if (localStorage.getItem(beer)) {
-            storagedBeer = localStorage.getItem(beer)
-            createCartItem(beer, 100 + "€", storagedBeer)
+// Function to fetch cart items from the server
+async function fetchCartItems(userId) {
+    const url = `http://localhost:8000/cart/${userId}`
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                //"Authorization": `${jwt}`, // Send token in header
+                'Content-Type': 'application/json'
+            }
+        })
+        if (!response.ok) {
+            throw new Error(`Failed to fetch cart items: ${response.statusText}`)
         }
-    })    
+        const data = await response.json()
+        return data.cart
+    } catch (error) {
+        console.error('Error fetching cart items:', error)
+        return []
+    }
 }
-addCartItems(beers)
 
-// CLEAR/EMPTY CART BUTTON
-emtpyCartBtn = document.querySelector('#empty-cart-btn')
-//add eventlistener to clear localstorage
-emtpyCartBtn.addEventListener('click', ()=> {
-    localStorage.clear()
-    location.reload()
+// Function to add cart items to the list
+async function addCartItems(userId) {
+    try {
+        const cartItems = await fetchCartItems(userId)
+        cartItems.forEach(item => {
+            createCartItemUI(item.product_name, `${item.price}€`, item.quantity)
+        })
+        return cartItems
+    } catch (error) {
+        return undefined
+    }
+}
+
+// function to make request to clear cart
+async function clearCart(userId) {
+    const url = `http://localhost:8000/cart/${userId}`
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                //"Authorization": `${jwt}`, // Send token in header
+                'Content-Type': 'application/json'
+            }
+        })
+        if (!response.ok) {
+            throw new Error(`Failed to clear cart: ${response.statusText}`)
+        }
+        return response.json()
+    } catch (error) {
+        console.error('Error clearing cart:', error)
+    }
+}
+function clearCartUI() {
+    // get the cart list element
+    const bsList = document.querySelector("#cart-items-container ol")
+    // create image element and append to the list
+    bsList.innerHTML = ""; // Clear the list
+    const img = document.createElement("img")
+    img.src = "../media/empty_beer_beach_small.jpg"
+    img.alt = "Empty Cart"; // Optional: Add alt text
+    img.style.width = "100%"; // Adjust size if needed
+    bsList.appendChild(img);
+    //change title to empty cart
+    const title = document.querySelector(".title-container h1")
+    title.innerHTML = "Empty Cart"
+    //disable buttons
+    document.querySelector('#empty-cart-btn').disabled = true
+    document.querySelector('#checkout-btn').disabled = true
+}
+// add event listener to the empty cart button
+document.querySelector('#empty-cart-btn').addEventListener('click', () => {
+    clearCart(userId)
+    clearCartUI()
 })
+
+// Initialize the cart
+async function initializeCart() {
+    const cartItems = await addCartItems(userId)
+    if (cartItems == undefined) {
+        console.log("Cart is empty")
+        clearCartUI()
+    } else {
+        console.log("Cart has items")
+    }
+}
+
+// Run the initialization function when the script loads
+initializeCart()
