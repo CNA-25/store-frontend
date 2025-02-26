@@ -1,0 +1,52 @@
+/* 
+background color: #09090b
+highilight color: #f97316
+hover:  #9a3412
+*/
+
+body {
+    background-color: #09090b;
+    text-align: center;
+    
+}
+
+h1 {
+    color:  #f97316;
+}
+
+h3 {
+    color:  #f97316;
+}
+
+form {
+    color:  #f97316;
+}
+
+a {
+    color: #f97316;
+    margin-top: 5px;
+}
+
+#password, #email {
+    color: #f97316;
+    background-color: #09090b;
+    border-color: #f97316;
+    padding: 5px 15px;
+    text-align: left;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+#login-btn {
+    color: #f97316;
+    background-color: #9a3412;
+    border: none;
+    padding: 5px 15px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+#login-btn:hover {
+    color: #9a3412;
+}
