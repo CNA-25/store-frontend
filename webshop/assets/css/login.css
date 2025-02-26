@@ -22,10 +22,15 @@ form {
     color:  #f97316;
 }
 
+a {
+    color: #f97316;
+    margin-top: 5px;
+}
+
 #password, #email {
     color: #f97316;
-    background-color: #9a3412;
-    border: none;
+    background-color: #09090b;
+    border-color: #f97316;
     padding: 5px 15px;
     text-align: left;
     border-radius: 4px;
