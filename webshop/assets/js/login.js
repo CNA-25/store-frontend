@@ -3,7 +3,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
 
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
-    const api_url = "https://user-service-api-user-service.2.rahtiapp.fi/login"; // byt till rätt backend url
+    const api_url = "https://user-service-api-user-service.2.rahtiapp.fi/login"; // backend url
 
     try {
         const response = await fetch(api_url, {

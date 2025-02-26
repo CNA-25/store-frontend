@@ -6,47 +6,77 @@ hover:  #9a3412
 
 body {
     background-color: #09090b;
+    color: #f97316;
+    font-family: Arial, sans-serif;
     text-align: center;
-    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-h1 {
-    color:  #f97316;
-}
-
-h3 {
-    color:  #f97316;
+h1, h3 {
+    color: #f97316;
+    margin-bottom: 10px;
 }
 
 form {
-    color:  #f97316;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 10px rgba(0, 0, 0, 0.5);
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-a {
-    color: #f97316;
-    margin-top: 5px;
-}
-
-#password, #email {
-    color: #f97316;
+input[type="email"], input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin: 8px;
+    border: 2px solid #f97316;
+    border-radius: 5px;
     background-color: #09090b;
-    border-color: #f97316;
-    padding: 5px 15px;
-    text-align: left;
-    border-radius: 4px;
-    margin-top: 5px;
+    color: #f97316;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #ffb84d;
+    box-shadow: 10px #f97316;
 }
 
 #login-btn {
-    color: #f97316;
-    background-color: #9a3412;
+    width: 100%;
+    padding: 10px;
+    background-color: #f97316;
+    color: #09090b;
     border: none;
-    padding: 5px 15px;
-    text-align: center;
-    border-radius: 4px;
-    margin-top: 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 #login-btn:hover {
+    background-color: #9a3412;
+    color: #ffffff;
+}
+
+
+a {
+    color: #f97316;
+    text-decoration: none;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+a:hover {
     color: #9a3412;
 }
+
