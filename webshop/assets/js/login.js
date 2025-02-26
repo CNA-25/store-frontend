@@ -25,6 +25,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
         }
 
         const data = await response.json(); // svar från servern
+        console.log("Backend data:" + data);
         const token = data.access_token; // jwt token från backend
 
         localStorage.setItem("jwt", "Bearer " + token); 
