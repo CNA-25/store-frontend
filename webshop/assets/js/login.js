@@ -26,6 +26,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
 
         const data = await response.json(); // svar från servern
         const token = data.access; // jwt token från backend
+        localStorage.setItem("jwt", "Bearer " + token);
 
         localStorage.setItem("jwt", "Bearer " + token); 
         window.location.href = "./cart.html"; // byt till rätt sida
