@@ -24,13 +24,13 @@ if (!window.userId) {
 }
 
 // Function to add to cart with API fetch
-async function addItemToCart(wl_userId, productId, quantity = 1) {
+async function addItemToCart(userId, productId, quantity = 1) {
     const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`;
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `${wl_jwt}`, // Send token in header
+            'Authorization': `${jwt}`, // Send token in header
             'Content-Type': 'application/json'
         }
     });
@@ -84,7 +84,7 @@ async function getAllBeers() {
         const response = await fetch("https://cart-service-git-cart-service.2.rahtiapp.fi/beers/", {
             method: "GET",
             headers: {
-                "Authorization": `${wl_jwt}`, // Send token in header
+                "Authorization": `${jwt}`, // Send token in header
                 "Content-Type": "application/json"
             }
         })
