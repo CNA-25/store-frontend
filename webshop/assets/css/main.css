@@ -76,21 +76,21 @@ button {
 }
 
 #saunaSessionAle {
-    background-image: url("/media/Sauna\ Session\ ale3.jpg");
+    background-image: url("/webshop/assets/images/Sauna\ Session\ ale3.jpg");
     background-size: cover;
 }
 #saunaSessionAle:hover {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/Sauna\ Session\ ale3.jpg")
 }
 #midsummerWheat {
-    background-image: url("/media/Midsummer\ Wheat1.jpg");
+    background-image: url("/webshop/assets/images/Midsummer\ Wheat1.jpg");
     background-size: cover;
 }
 #midsummerWheat:hover {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/Midsummer\ Wheat1.jpg")
 }
 #midnightBlackIPA {
-    background-image: url("/media/Lapland\ Midnight\ Black\ IPA2.jpg");
+    background-image: url("/webshop/assets/images/Lapland\ Midnight\ Black\ IPA2.jpg");
     background-size: cover;
 }
 #midnightBlackIPA:hover {
@@ -123,14 +123,14 @@ button {
 
 @font-face {
     font-family: 'Rubik-font';
-    src: url('/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
+    src: url('/webshop/assets/fonts/Rubik-VariableFont_wght.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Rubik-font';
-    src: url('/fonts/Rubik-Italic-VariableFont_wght.ttf') format('truetype');
+    src: url('/webshop/assets/fonts/Rubik-Italic-VariableFont_wght.ttf') format('truetype');
     font-weight: normal;
     font-style: italic;
 }
