@@ -15,7 +15,6 @@ const jwt = localStorage.getItem('jwt')
 const userId = getUserIdFromJWT(jwtToken)
 if (!userId) {
     console.error("User ID could not be extracted from JWT")
-    return
 }
 
 // Function to add to cart with API fetch
