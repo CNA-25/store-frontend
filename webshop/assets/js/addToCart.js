@@ -11,20 +11,26 @@ function getUserIdFromJWT(token) {
         return null
     }
 }
-let jwt = localStorage.getItem('jwt') 
-let userId = getUserIdFromJWT(jwt)
-if (!userId) {
+
+// Store jwt and userId globally if not already set
+if (!window.jwt) {
+    window.jwt = localStorage.getItem('jwt')
+}
+if (!window.userId) {
+    window.userId = getUserIdFromJWT(window.jwt)
+}
+if (!window.userId) {
     console.error("User ID could not be extracted from JWT")
 }
 
 // Function to add to cart with API fetch
-async function addItemToCart(userId, productId, quantity = 1) {
+async function addItemToCart(wl_userId, productId, quantity = 1) {
     const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`;
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `${jwt}`, // Send token in header
+            'Authorization': `${wl_jwt}`, // Send token in header
             'Content-Type': 'application/json'
         }
     });
@@ -78,7 +84,7 @@ async function getAllBeers() {
         const response = await fetch("https://cart-service-git-cart-service.2.rahtiapp.fi/beers/", {
             method: "GET",
             headers: {
-                "Authorization": `${jwt}`, // Send token in header
+                "Authorization": `${wl_jwt}`, // Send token in header
                 "Content-Type": "application/json"
             }
         })

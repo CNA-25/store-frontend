@@ -11,9 +11,10 @@ function getUserIdFromJWT(token) {
         return null
     }
 }
-const jwt = localStorage.getItem('jwt') 
-const userId = getUserIdFromJWT(jwt)
-if (!userId) {
+// Store jwt and userId globally
+window.jwt = localStorage.getItem('jwt')
+window.userId = getUserIdFromJWT(window.jwt)
+if (!window.userId) {
     console.error("User ID could not be extracted from JWT")
 }
 
