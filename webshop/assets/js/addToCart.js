@@ -12,7 +12,7 @@ async function addItemToCart(productId, quantity = 1) {
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            "Authorization": `${jwt}`, // Send token in header
+            'Authorization': `${jwt}`, // Send token in header
             'Content-Type': 'application/json'
         }
     });
@@ -63,7 +63,7 @@ function handleToast(beer) {
 // Function to get all available beers
 async function getAllBeers() {
     try {
-        const response = await fetch("// https://cart-service-git-cart-service.2.rahtiapp.fi/beers/", {
+        const response = await fetch("https://cart-service-git-cart-service.2.rahtiapp.fi/beers/", {
             method: "GET",
             headers: {
                 "Authorization": `${jwt}`, // Send token in header
