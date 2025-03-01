@@ -1,4 +1,8 @@
 console.log("wishlist.js")
+// API ADDRESS: https://wishlist-git-wishlist.2.rahtiapp.fi/
+
+const jwt = localStorage.getItem('jwt') 
+const userId = 1 // Replace with actual user ID
 
 // Function for creating the cart list elements
 function createCartItem(title, content, userId, sku) {
@@ -37,12 +41,13 @@ function createCartItem(title, content, userId, sku) {
 }
 
 // Function to fetch wishlist items from the server
-async function fetchWishlistItems(userId) { //https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/
-    const url = `http://localhost:8001/wishlist/${userId}`
+async function fetchWishlistItems(userId) { 
+    const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${userId}`
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
+                'Authorization': `${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
         })
@@ -58,12 +63,13 @@ async function fetchWishlistItems(userId) { //https://wishlist-git-wishlist.2.ra
 }
 
 // Function to remove item from wishlist
-async function removeFromWishlist(userId, sku) { //https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/
-    const url = `http://localhost:8001/wishlist/${userId}/${sku}`
+async function removeFromWishlist(userId, sku) { 
+    const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${userId}/${sku}`
     try {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
+                'Authorization': `${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
         });
@@ -80,7 +86,7 @@ async function removeFromWishlist(userId, sku) { //https://wishlist-git-wishlist
 }
 // Function to add to cart with API fetch
 async function addItemToCart(userId, productId, quantity = 1) {
-    const url = `http://localhost:8000/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
+    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
 
     const response = await fetch(url, {
         method: 'POST',
@@ -105,7 +111,6 @@ async function addWishlistItems(userId) {
     });
 }
 // Initialize the wishlist
-const userId = 1 // Replace with actual user ID
 addWishlistItems(userId)
 
 // Clear whole wishlist button functionality

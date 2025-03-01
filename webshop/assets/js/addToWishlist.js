@@ -1,4 +1,5 @@
 console.log("addToWishlist.js")
+// API ADDRESS: https://wishlist-git-wishlist.2.rahtiapp.fi/
 
 // API call to add to wishlist
 //format : { "user_id": 2,
@@ -8,12 +9,12 @@ console.log("addToWishlist.js")
 //  "description": "En ljus och frisk lager med balanserad smak." }
 //  Response: { "message": "Product added to wishlist" }
 async function addItemToWishlist(userId, sku, name, price, description) {
-    const url = `http://localhost:8001/wishlist/`
+    const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/`
     
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            //"Authorization": `${jwt}`, // Send token in header
+            'Authorization': `${jwt}`, // Send token in header
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({

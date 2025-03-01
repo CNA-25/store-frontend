@@ -1,8 +1,9 @@
 console.log("cart.js");
+// API ADDRESS: https://cart-service-git-cart-service.2.rahtiapp.fi/
 
 //HARDCODED USERID
 const userId = 1 // Replace with actual user ID
-const jwt = "header.payload.secret" // Replace with actual JWT token
+const jwt = localStorage.getItem('jwt') 
 
 // Function to create a cart item UI element
 function createCartItemUI(title, content, amount) {
@@ -26,12 +27,12 @@ function createCartItemUI(title, content, amount) {
 
 // Function to fetch cart items from the server
 async function fetchCartItems(userId) {
-    const url = `http://localhost:8000/cart/${userId}`
+    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/${userId}`
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                //"Authorization": `${jwt}`, // Send token in header
+                "Authorization": `${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
         })
@@ -61,12 +62,12 @@ async function addCartItems(userId) {
 
 // function to make request to clear cart
 async function clearCart(userId) {
-    const url = `http://localhost:8000/cart/${userId}`
+    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/${userId}`
     try {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
-                //"Authorization": `${jwt}`, // Send token in header
+                "Authorization": `${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
         })

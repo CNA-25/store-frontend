@@ -1,16 +1,18 @@
 console.log("addToCart.js")
+// API ADDRESS: https://cart-service-git-cart-service.2.rahtiapp.fi/
+
 //HARDCODED USERID
 const userId = 1 // Replace with actual user ID
-const jwt = "header.payload.secret" // Replace with actual JWT token
+const jwt = localStorage.getItem('jwt') 
 
 // Function to add to cart with API fetch
-async function addItemToCart(userId, productId, quantity = 1) {
-    const url = `http://localhost:8000/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`;
+async function addItemToCart(productId, quantity = 1) {
+    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?product_id=${productId}&quantity=${quantity}`;
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            //"Authorization": `${jwt}`, // Send token in header
+            "Authorization": `${jwt}`, // Send token in header
             'Content-Type': 'application/json'
         }
     });
@@ -61,10 +63,10 @@ function handleToast(beer) {
 // Function to get all available beers
 async function getAllBeers() {
     try {
-        const response = await fetch("http://127.0.0.1:8000/beers/", {
+        const response = await fetch("// https://cart-service-git-cart-service.2.rahtiapp.fi/beers/", {
             method: "GET",
             headers: {
-                //"Authorization": `${jwt}`, // Send token in header
+                "Authorization": `${jwt}`, // Send token in header
                 "Content-Type": "application/json"
             }
         })
@@ -74,4 +76,4 @@ async function getAllBeers() {
         console.error("Failed to fetch beers:", error)
     }
 }
-//getAllBeers()
+getAllBeers()
