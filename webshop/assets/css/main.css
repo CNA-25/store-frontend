@@ -80,21 +80,21 @@ button {
     background-size: cover;
 }
 #saunaSessionAle:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/Sauna\ Session\ ale3.jpg")
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Sauna\ Session\ ale3.jpg")
 }
 #midsummerWheat {
     background-image: url("/webshop/assets/images/Midsummer\ Wheat1.jpg");
     background-size: cover;
 }
 #midsummerWheat:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/Midsummer\ Wheat1.jpg")
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Midsummer\ Wheat1.jpg")
 }
 #midnightBlackIPA {
     background-image: url("/webshop/assets/images/Lapland\ Midnight\ Black\ IPA2.jpg");
     background-size: cover;
 }
 #midnightBlackIPA:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/media/Lapland\ Midnight\ Black\ IPA2.jpg")
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Lapland\ Midnight\ Black\ IPA2.jpg")
 }
 
 /* BUY 100 BEERS BUTTON */
