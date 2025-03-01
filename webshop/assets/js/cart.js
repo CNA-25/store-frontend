@@ -1,9 +1,22 @@
 console.log("cart.js");
 // API ADDRESS: https://cart-service-git-cart-service.2.rahtiapp.fi/
 
-//HARDCODED USERID
-const userId = 1 // Replace with actual user ID
-const jwt = localStorage.getItem('jwt') 
+// Function to decode JWT and extract the user ID
+function getUserIdFromJWT(token) {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1])) // Decode payload
+        return payload.sub || payload.user_id // Adjust based on API structure
+    } catch (e) {
+        console.error("Invalid JWT", e)
+        return null
+    }
+}
+const jwt = localStorage.getItem('jwt')
+const userId = getUserIdFromJWT(jwtToken)
+if (!userId) {
+    console.error("User ID could not be extracted from JWT")
+    return
+}
 
 // Function to create a cart item UI element
 function createCartItemUI(title, content, amount) {

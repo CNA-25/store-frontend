@@ -1,13 +1,26 @@
 console.log("addToCart.js")
 // API ADDRESS: https://cart-service-git-cart-service.2.rahtiapp.fi/
 
-//HARDCODED USERID
-const userId = 1 // Replace with actual user ID
+// Function to decode JWT and extract the user ID
+function getUserIdFromJWT(token) {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1])) // Decode payload
+        return payload.sub || payload.user_id // Adjust based on API structure
+    } catch (e) {
+        console.error("Invalid JWT", e)
+        return null
+    }
+}
 const jwt = localStorage.getItem('jwt') 
+const userId = getUserIdFromJWT(jwtToken)
+if (!userId) {
+    console.error("User ID could not be extracted from JWT")
+    return
+}
 
 // Function to add to cart with API fetch
-async function addItemToCart(productId, quantity = 1) {
-    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?product_id=${productId}&quantity=${quantity}`;
+async function addItemToCart(userId, productId, quantity = 1) {
+    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`;
 
     const response = await fetch(url, {
         method: 'POST',
@@ -76,4 +89,4 @@ async function getAllBeers() {
         console.error("Failed to fetch beers:", error)
     }
 }
-getAllBeers()
+//getAllBeers()

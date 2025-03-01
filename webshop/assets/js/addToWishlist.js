@@ -1,6 +1,23 @@
 console.log("addToWishlist.js")
 // API ADDRESS: https://wishlist-git-wishlist.2.rahtiapp.fi/
 
+// Function to decode JWT and extract the user ID
+function getUserIdFromJWT(token) {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1])) // Decode payload
+        return payload.sub || payload.user_id // Adjust based on API structure
+    } catch (e) {
+        console.error("Invalid JWT", e)
+        return null
+    }
+}
+const jwt = localStorage.getItem('jwt') 
+const userId = getUserIdFromJWT(jwtToken)
+if (!userId) {
+    console.error("User ID could not be extracted from JWT")
+    return
+}
+
 // API call to add to wishlist
 //format : { "user_id": 2,
 //  "sku": "123-ABC",
@@ -33,25 +50,24 @@ async function addItemToWishlist(userId, sku, name, price, description) {
     return response.json() // Return the response data
 }
 
-// HARDCODED BEERS and USERID
-const user_id = 1 // Replace with actual user ID
+// HARDCODED BEERS
 beers = [
     {
-        user_id: user_id,
+        user_id: userId,
         sku: '123-ABC',
         name: "Lager",
         price: 55.99,
         description: "En ljus och frisk lager med balanserad smak."
     },
     {
-        user_id: user_id,
+        user_id: userId,
         sku: '124-ABD',
         name: "Ale",
         price: 65.99,
         description: "En ljus och frisk ale med väldigt balanserad smak."
     },
     {
-        user_id: user_id,
+        user_id: userId,
         sku: '125-ABE',
         name: "IPA",
         price: 75.99,
