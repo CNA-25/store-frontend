@@ -125,7 +125,7 @@ async function addWishlistItems(userId) {
     });
 }
 // Initialize the wishlist
-addWishlistItems(userId)
+addWishlistItems(window.userId)
 
 // Clear whole wishlist button functionality
 const emptyWishlistBtn = document.querySelector('#empty-wishlist-btn')
@@ -133,19 +133,19 @@ const emptyWishlistBtn = document.querySelector('#empty-wishlist-btn')
 emptyWishlistBtn.addEventListener('click', async () => {
     const wishlistItems = await fetchWishlistItems(userId)
     for (const item of wishlistItems) {
-        await removeFromWishlist(userId, item.sku)
+        await removeFromWishlist(window.userId, item.sku)
     }
     location.reload()
 })
 
 // Add whole wishlist to cart button functionality
 document.querySelector('#add-all-wishlist-btn').addEventListener('click', async () => {
-    const wishlistItems = await fetchWishlistItems(userId)
+    const wishlistItems = await fetchWishlistItems(window.userId)
     wishlistItems.forEach(item => {
         // Add to cart logic here
         console.log(`Added to cart: ${item.name}`)
         // Remove from wishlist
-        removeFromWishlist(userId, item.sku)
+        removeFromWishlist(window.userId, item.sku)
     })
     location.reload()
 })

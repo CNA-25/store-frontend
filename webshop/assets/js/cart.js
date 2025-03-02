@@ -117,7 +117,7 @@ document.querySelector('#empty-cart-btn').addEventListener('click', () => {
 
 // Initialize the cart
 async function initializeCart() {
-    const cartItems = await addCartItems(userId)
+    const cartItems = await addCartItems(window.userId)
     if (cartItems == undefined) {
         console.log("Cart is empty")
         clearCartUI()

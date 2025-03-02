@@ -49,7 +49,7 @@ function addBeerBtn(beerIds, beers) {
     beers.forEach((beer, index)=> {
         beer.addEventListener('click', () => {
             // use function for making api call to add to cart
-            addItemToCart(1, beerIds[index], 1)
+            addItemToCart(window.userId, beerIds[index], 1)
                 //for dev purposes
                 //.then(data => console.log('Item added:', data))
                 //.catch(error => console.error('Error:', error))

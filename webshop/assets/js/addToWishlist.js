@@ -25,22 +25,15 @@ if (!window.userId) {
 //  "price": 55.99,
 //  "description": "En ljus och frisk lager med balanserad smak." }
 //  Response: { "message": "Product added to wishlist" }
-async function addItemToWishlist(userId, sku, name, price, description) {
-    const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/`
+async function addItemToWishlist(sku) {
+    const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${sku}`
     
     const response = await fetch(url, {
         method: 'POST',
         headers: {
             'Authorization': `${jwt}`, // Send token in header
             'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            user_id: userId,
-            sku: sku,
-            name: name,
-            price: price,
-            description: description
-        })
+        }
     })
     if (!response.ok) {
         const errorData = await response.json()
@@ -77,13 +70,7 @@ beers = [
 // Add eventlisteners to ADD to WISHLIST buttons 
 document.querySelectorAll(".btn-add-wishlist").forEach((button, index) => {
     button.addEventListener("click", function() {
-        addItemToWishlist(
-            beers[index].user_id,
-            beers[index].sku,
-            beers[index].name,
-            beers[index].price,
-            beers[index].description
-        )
+        addItemToWishlist(beers[index].sku)
         handleToast("Lager")
     })
 })
