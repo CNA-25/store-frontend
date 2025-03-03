@@ -9,7 +9,6 @@ async function showProducts() {
     }
     const resp = await fetch(URL);
     const data = await resp.json();
-    console.log(data);
     console.log(data.msg);
 
     // Visa produkter
@@ -25,7 +24,8 @@ async function showProducts() {
                 <p>Info:</p>
                 <p>${product.description}</p>
                 <p>${product.category}, ${product.country}</p>
-                <p></p>
+                <button onclick="addItemToCart(${product.id})">Add to Cart</button>
+                <button onclick="addItemToWishlist(${product.sku})">Add to Wishlist</button>
             <div>
         `;
     }
