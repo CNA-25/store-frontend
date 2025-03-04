@@ -11,27 +11,29 @@ function getUserIdFromJWT(token) {
         return null
     }
 }
-// Store jwt and userId globally
-window.jwt = localStorage.getItem('jwt')
-window.userId = getUserIdFromJWT(window.jwt)
+
+// Store jwt and userId globally if not already set
+if (!window.jwt) {
+    window.jwt = localStorage.getItem('jwt')
+}
+if (!window.userId) {
+    window.userId = getUserIdFromJWT(window.jwt)
+}
 if (!window.userId) {
     console.error("User ID could not be extracted from JWT")
 }
+// Remove the 'Bearer ' part (space included)
+window.jwtNotBearer = window.jwt.replace('Bearer ', '')
 
-// API call to add to wishlist
-//format : { "user_id": 2,
-//  "sku": "123-ABC",
-//  "name": "Lager",
-//  "price": 55.99,
-//  "description": "En ljus och frisk lager med balanserad smak." }
-//  Response: { "message": "Product added to wishlist" }
-async function addItemToWishlist(sku) {
+// function to make API call ADD to WISHLIST
+async function addItemToWishlist(sku, jwt) {
+    // LIVE URL = `http://localhost:8001/wishlist/${sku}`
     const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${sku}`
     
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `${jwt}`, // Send token in header
+            'Authorization': `Bearer ${jwt}`, // Send token in header
             'Content-Type': 'application/json'
         }
     })
@@ -43,34 +45,13 @@ async function addItemToWishlist(sku) {
     return response.json() // Return the response data
 }
 
-// HARDCODED BEERS
-beers = [
-    {
-        user_id: userId,
-        sku: '123-ABC',
-        name: "Lager",
-        price: 55.99,
-        description: "En ljus och frisk lager med balanserad smak."
-    },
-    {
-        user_id: userId,
-        sku: '124-ABD',
-        name: "Ale",
-        price: 65.99,
-        description: "En ljus och frisk ale med väldigt balanserad smak."
-    },
-    {
-        user_id: userId,
-        sku: '125-ABE',
-        name: "IPA",
-        price: 75.99,
-        description: "En ljus och frisk IPA med obalanserad smak."
-    }
-]
+// hardcoded beers sku codes
+const skuCodes = ["123-ABC", "456-DEF", "789-GHI", "321-JKL", "654-MNO"]
+
 // Add eventlisteners to ADD to WISHLIST buttons 
 document.querySelectorAll(".btn-add-wishlist").forEach((button, index) => {
     button.addEventListener("click", function() {
-        addItemToWishlist(beers[index].sku)
+        addItemToWishlist(skuCodes[index], window.jwtNotBearer)
         handleToast("Lager")
     })
 })

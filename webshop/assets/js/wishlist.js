@@ -11,15 +11,22 @@ function getUserIdFromJWT(token) {
         return null
     }
 }
-// Store jwt and userId globally
-window.jwt = localStorage.getItem('jwt')
-window.userId = getUserIdFromJWT(window.jwt)
+
+// Store jwt and userId globally if not already set
+if (!window.jwt) {
+    window.jwt = localStorage.getItem('jwt')
+}
+if (!window.userId) {
+    window.userId = getUserIdFromJWT(window.jwt)
+}
 if (!window.userId) {
     console.error("User ID could not be extracted from JWT")
 }
+// Remove the 'Bearer ' part (space included)
+window.jwtNotBearer = window.jwt.replace('Bearer ', '')
 
 // Function for creating the cart list elements
-function createCartItem(title, content, userId, sku) {
+function createCartItem(userId, sku, jwt) {
     // the bootstrap list
     const bsList = document.querySelector("#cart-items-container ol")
     // create list element
@@ -28,8 +35,8 @@ function createCartItem(title, content, userId, sku) {
     // list item content 
     listItem.innerHTML = `
         <div class="ms-2 me-auto">
-            <div class="fw-bold beer-title">${title}</div>
-            ${content}
+            <div class="fw-bold beer-title">${sku}</div>
+            ${sku}
         </div>
         <button class="btn btn-danger remove-from-wl-btn">Remove</button>
         <button class="btn btn-success wl-to-cart-btn">Add to cart</button>
@@ -39,29 +46,32 @@ function createCartItem(title, content, userId, sku) {
     // Attach event listeners to buttons immediately
     // REMOVE ONE
     listItem.querySelector('.remove-from-wl-btn').addEventListener('click', async () => {
-        console.log(`Removed: ${title}`)
+        console.log(`Removed: ${sku}`)
         // remove one from wishlist
-        await removeFromWishlist(userId, sku)
-        listItem.remove();
+        await removeFromWishlist(sku, jwt)
+        listItem.remove()
     })
     // ADD ONE
     listItem.querySelector('.wl-to-cart-btn').addEventListener('click', async () => {
-        console.log(`Added to cart: ${title}`)
-        await addItemToCart(userId, 1, 1) //HARDCODED PRODUCT ID (fix: sku != product_id)
+        console.log(`Added to cart: ${sku}`)
+        await addItemToCart(userId, sku, jwt) 
+        .then(data => console.log('Item added:', data))
+        .catch(error => console.error('Error:', error))
         // remove from wishlist
-        removeFromWishlist(userId, sku)
+        removeFromWishlist(sku, jwt)
         listItem.remove()
     })
 }
 
 // Function to fetch wishlist items from the server
-async function fetchWishlistItems(userId) { 
+async function fetchWishlistItems(userId, jwt) { 
+    // LOCAL API URL = `http://localhost:8001/wishlist/${userId}`
     const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${userId}`
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `${jwt}`, // Send token in header
+                'Authorization': `Bearer ${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
         })
@@ -72,21 +82,33 @@ async function fetchWishlistItems(userId) {
         return data.wishlist
     } catch (error) {
         console.error('Error fetching wishlist items:', error)
-        return []
+        return 
     }
 }
 
+// Function to add wishlist items to the list
+async function addWishlistItems(userId, jwt) {
+    const wishlistItems = await fetchWishlistItems(userId, jwt)
+    console.log(wishlistItems)
+    wishlistItems.forEach(item => {
+        createCartItem(userId, item.sku, jwt)
+    })
+}
+// Initialize the wishlist
+addWishlistItems(window.userId, window.jwtNotBearer)
+
 // Function to remove item from wishlist
-async function removeFromWishlist(userId, sku) { 
-    const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${userId}/${sku}`
+async function removeFromWishlist(sku, jwt) { 
+    // LOCAL API URL = `http://localhost:8001/wishlist/${sku}`
+    const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${sku}`
     try {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
-                'Authorization': `${jwt}`, // Send token in header
+                'Authorization': `Bearer ${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
-        });
+        })
         if (!response.ok) {
             const errorData = await response.json()
             console.error('Error Data:', errorData)
@@ -95,57 +117,50 @@ async function removeFromWishlist(userId, sku) {
         const data = await response.json()
         console.log(data.message)
     } catch (error) {
-        console.error('Error removing item from wishlist:', error)
+        console.error(error)
     }
 }
-// Function to add to cart with API fetch
-async function addItemToCart(userId, productId, quantity = 1) {
-    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    if (!response.ok) {
-        const errorData = await response.json()
-        console.error('Error Data:', errorData)
-        throw new Error(`Failed to add item: ${response.statusText} - ${JSON.stringify(errorData)}`);
-    }
-    return response.json() // Return the response data
-}
-
-// Function to add wishlist items to the list
-async function addWishlistItems(userId) {
-    const wishlistItems = await fetchWishlistItems(userId)
-    console.log(wishlistItems)
-    wishlistItems.forEach(item => {
-        createCartItem(item.name, item.description, userId, item.sku)
-    });
-}
-// Initialize the wishlist
-addWishlistItems(window.userId)
 
 // Clear whole wishlist button functionality
 const emptyWishlistBtn = document.querySelector('#empty-wishlist-btn')
 // Add event listener to clear wishlist
 emptyWishlistBtn.addEventListener('click', async () => {
-    const wishlistItems = await fetchWishlistItems(userId)
+    const wishlistItems = await fetchWishlistItems(window.userId, window.jwtNotBearer)
     for (const item of wishlistItems) {
-        await removeFromWishlist(window.userId, item.sku)
+        await removeFromWishlist(item.sku, window.jwtNotBearer)
     }
     location.reload()
 })
 
-// Add whole wishlist to cart button functionality
+// AddEventListener "add all to cart" button 
 document.querySelector('#add-all-wishlist-btn').addEventListener('click', async () => {
-    const wishlistItems = await fetchWishlistItems(window.userId)
+    const wishlistItems = await fetchWishlistItems(window.userId, window.jwtNotBearer)
     wishlistItems.forEach(item => {
         // Add to cart logic here
-        console.log(`Added to cart: ${item.name}`)
+        console.log(`Added to cart: ${item.sku}`)
         // Remove from wishlist
-        removeFromWishlist(window.userId, item.sku)
+        removeFromWishlist(item.sku, window.jwtNotBearer)
     })
     location.reload()
 })
+
+// Function to add to cart with API fetch
+async function addItemToCart(userId, productId, jwt, quantity = 1) {
+    // LOCAL URL = `http://localhost:8000/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
+    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'token': `${jwt}`, // Send token in header
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(`Failed to add item: ${response.statusText} - ${JSON.stringify(errorData)}`)
+    }
+
+    return response.json() // Return the response data
+}
