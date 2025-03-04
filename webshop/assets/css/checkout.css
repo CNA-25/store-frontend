@@ -22,7 +22,7 @@ h1, h3 {
     margin-bottom: 10px;
 }
 
-form {
+#checkout-form {
     background-color: #1a1a1a;
     padding: 20px;
     border-radius: 8px;
@@ -33,7 +33,7 @@ form {
     align-items: center;
 }
 
-input[type="email"], input[type="password"] {
+input[type="email"], input[type="password"], input[type="text"] {
     width: 90%;
     padding: 10px;
     margin: 8px;
@@ -45,12 +45,12 @@ input[type="email"], input[type="password"] {
     transition: 0.3s ease;
 }
 
-input[type="email"]:focus, input[type="password"]:focus {
+input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus {
     border-color: #ffb84d;
     box-shadow: 10px #f97316;
 }
 
-#login-btn {
+#btn-submit {
     width: 100%;
     padding: 10px;
     background-color: #f97316;
@@ -63,7 +63,7 @@ input[type="email"]:focus, input[type="password"]:focus {
     margin-top: 10px;
 }
 
-#login-btn:hover {
+#btn-submit:hover {
     background-color: #9a3412;
     color: #ffffff;
 }
