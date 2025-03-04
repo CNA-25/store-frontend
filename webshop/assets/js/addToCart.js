@@ -22,22 +22,24 @@ if (!window.userId) {
 if (!window.userId) {
     console.error("User ID could not be extracted from JWT")
 }
+// Remove the 'Bearer ' part (space included)
+window.jwtNotBearer = window.jwt.replace('Bearer ', '')
 
 // Function to add to cart with API fetch
-async function addItemToCart(userId, productId, quantity = 1) {
-    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`;
+async function addItemToCart(userId, productId, jwt, quantity = 1) {
+    // LOCAL URL = `http://localhost:8000/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
+    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
 
     const response = await fetch(url, {
         method: 'POST',
         headers: {
-            'Authorization': `${jwt}`, // Send token in header
+            'token': `${jwt}`, // Send token in header
             'Content-Type': 'application/json'
         }
     });
 
     if (!response.ok) {
         const errorData = await response.json()
-        console.error('Error Data:', errorData)
         throw new Error(`Failed to add item: ${response.statusText} - ${JSON.stringify(errorData)}`)
     }
 
@@ -49,7 +51,7 @@ function addBeerBtn(beerIds, beers) {
     beers.forEach((beer, index)=> {
         beer.addEventListener('click', () => {
             // use function for making api call to add to cart
-            addItemToCart(window.userId, beerIds[index], 1)
+            addItemToCart(window.userId, beerIds[index], window.jwtNotBearer)
                 //for dev purposes
                 //.then(data => console.log('Item added:', data))
                 //.catch(error => console.error('Error:', error))
@@ -77,21 +79,3 @@ function handleToast(beer) {
         toastBootstrap.show()
     }
 }
-
-// Function to get all available beers
-async function getAllBeers() {
-    try {
-        const response = await fetch("https://cart-service-git-cart-service.2.rahtiapp.fi/beers/", {
-            method: "GET",
-            headers: {
-                "Authorization": `${jwt}`, // Send token in header
-                "Content-Type": "application/json"
-            }
-        })
-        const data = await response.json()
-        console.log(data)
-    } catch (error) {
-        console.error("Failed to fetch beers:", error)
-    }
-}
-//getAllBeers()

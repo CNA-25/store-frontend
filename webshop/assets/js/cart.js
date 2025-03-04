@@ -11,12 +11,19 @@ function getUserIdFromJWT(token) {
         return null
     }
 }
-// Store jwt and userId globally
-window.jwt = localStorage.getItem('jwt')
-window.userId = getUserIdFromJWT(window.jwt)
+
+// Store jwt and userId globally if not already set
+if (!window.jwt) {
+    window.jwt = localStorage.getItem('jwt')
+}
+if (!window.userId) {
+    window.userId = getUserIdFromJWT(window.jwt)
+}
 if (!window.userId) {
     console.error("User ID could not be extracted from JWT")
 }
+// Remove the 'Bearer ' part (space included)
+window.jwtNotBearer = window.jwt.replace('Bearer ', '')
 
 // Function to create a cart item UI element
 function createCartItemUI(title, content, amount) {
@@ -39,33 +46,36 @@ function createCartItemUI(title, content, amount) {
 }
 
 // Function to fetch cart items from the server
-async function fetchCartItems(userId) {
+async function fetchCartItems(userId, jwt) {
+    // LOCAL URL = `http://localhost:8000/cart/${userId}`
     const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/${userId}`
     try {
         const response = await fetch(url, {
             method: 'GET',
             headers: {
-                "Authorization": `${jwt}`, // Send token in header
+                'token': `${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
         })
         if (!response.ok) {
-            throw new Error(`Failed to fetch cart items: ${response.statusText}`)
+            const errorData = await response.json()
+            throw new Error(`Failed to fetch cart items: ${response.statusText} - ${JSON.stringify(errorData)}`)
         }
         const data = await response.json()
         return data.cart
     } catch (error) {
-        console.error('Error fetching cart items:', error)
-        return []
+        console.error(error)
+        return
     }
 }
 
 // Function to add cart items to the list
-async function addCartItems(userId) {
+async function addCartItems(userId, jwt) {
     try {
-        const cartItems = await fetchCartItems(userId)
+        const cartItems = await fetchCartItems(userId, jwt)
+        console.log(cartItems)
         cartItems.forEach(item => {
-            createCartItemUI(item.product_name, `${item.price}€`, item.quantity)
+            createCartItemUI(item.product_id, `${item.price}€`, item.quantity)
         })
         return cartItems
     } catch (error) {
@@ -74,13 +84,14 @@ async function addCartItems(userId) {
 }
 
 // function to make request to clear cart
-async function clearCart(userId) {
+async function clearCart(userId , jwt) {
+    // LOCAL URL = `http://localhost:8000/cart/${userId}`
     const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/${userId}`
     try {
         const response = await fetch(url, {
             method: 'DELETE',
             headers: {
-                "Authorization": `${jwt}`, // Send token in header
+                'token': `${jwt}`, // Send token in header
                 'Content-Type': 'application/json'
             }
         })
@@ -111,13 +122,13 @@ function clearCartUI() {
 }
 // add event listener to the empty cart button
 document.querySelector('#empty-cart-btn').addEventListener('click', () => {
-    clearCart(userId)
+    clearCart(window.userId, window.jwtNotBearer)
     clearCartUI()
 })
 
 // Initialize the cart
-async function initializeCart() {
-    const cartItems = await addCartItems(window.userId)
+async function initializeCart(userId, jwt) {
+    const cartItems = await addCartItems(userId, jwt)
     if (cartItems == undefined) {
         console.log("Cart is empty")
         clearCartUI()
@@ -127,4 +138,4 @@ async function initializeCart() {
 }
 
 // Run the initialization function when the script loads
-initializeCart()
+initializeCart(window.userId, window.jwtNotBearer)
