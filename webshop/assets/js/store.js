@@ -91,7 +91,7 @@ async function showProducts(userId, jwt) {
                 <p>${product.description}</p>
                 <p>${product.category}, ${product.country}</p>
                 <button onclick="addItemToCart('${userId}', '${product.id}', '${jwt}')">Add to Cart</button>
-                <button onclick="addItemToWishlist(${product.sku}, '${jwt}')">Add to Wishlist</button>
+                <button onclick="addItemToWishlist('${product.sku}', '${jwt}')">Add to Wishlist</button>
             <div>
         `;
 
