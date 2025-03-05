@@ -75,7 +75,7 @@ async function addCartItems(userId, jwt) {
         const cartItems = await fetchCartItems(userId, jwt)
         console.log(cartItems)
         cartItems.forEach(item => {
-            createCartItemUI(item.product_id, `${item.price}€`, item.quantity)
+            createCartItemUI(item.sku, `${item.price}€`, item.quantity)
         })
         return cartItems
     } catch (error) {
