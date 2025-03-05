@@ -45,7 +45,7 @@ async function addItemToCart(userId, productId, jwt, quantity = 1) {
 
     return response.json() // Return the response data
 }
-
+/*
 // Function to UI buttons to add beer to cart
 function addBeerBtn(beerIds, beers) {
     beers.forEach((beer, index)=> {
@@ -68,6 +68,8 @@ beers = [saunaSessionAle, midsummerWheat, midnightBlackIPA]
 
 beerIds = [1, 2, 3] // hardcoded beerid
 addBeerBtn(beerIds, beers)
+*/
+
 
 // FUNCTION FOR HANDLE TOAST NOTIFICATION FOR ADDING TO CART
 function handleToast(beer) {
