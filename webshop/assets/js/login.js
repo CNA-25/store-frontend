@@ -29,7 +29,7 @@ document.getElementById("login-form").addEventListener("submit", async function(
         const token = data.access_token; // jwt token från backend
 
         localStorage.setItem("jwt", "Bearer " + token); 
-        window.location.href = "./store.html"; // byt till rätt sida
+        window.location.href = "./pages/cart.html"; // byt till rätt sida
 
     } catch (error) {
         console.error("Login failed:", error.message);
