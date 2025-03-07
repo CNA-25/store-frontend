@@ -32,4 +32,4 @@ async function showProducts(userId, jwt) {
     }
     document.querySelector('#products').innerHTML = outputString;
 }
-showProducts(window.userId, window.jwtNotBearer);
+showProducts(window.userId, window.jwt);

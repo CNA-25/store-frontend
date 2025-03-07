@@ -98,7 +98,7 @@ function clearCartUI() {
 }
 // add event listener to the empty cart button
 document.querySelector('#empty-cart-btn').addEventListener('click', () => {
-    clearCart(window.userId, window.jwtNotBearer)
+    clearCart(window.userId, window.jwt)
     clearCartUI()
 })
 
@@ -114,4 +114,4 @@ async function initializeCart(userId, jwt) {
 }
 
 // Run the initialization function when the script loads
-initializeCart(window.userId, window.jwtNotBearer)
+initializeCart(window.userId, window.jwt)

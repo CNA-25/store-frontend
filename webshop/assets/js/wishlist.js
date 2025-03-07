@@ -71,7 +71,7 @@ async function addWishlistItems(userId, jwt) {
     })
 }
 // Initialize the wishlist
-addWishlistItems(window.userId, window.jwtNotBearer)
+addWishlistItems(window.userId, window.jwt)
 
 // Function to remove item from wishlist
 async function removeFromWishlist(sku, jwt) { 
@@ -101,21 +101,21 @@ async function removeFromWishlist(sku, jwt) {
 const emptyWishlistBtn = document.querySelector('#empty-wishlist-btn')
 // Add event listener to clear wishlist
 emptyWishlistBtn.addEventListener('click', async () => {
-    const wishlistItems = await fetchWishlistItems(window.userId, window.jwtNotBearer)
+    const wishlistItems = await fetchWishlistItems(window.userId, window.jwt)
     for (const item of wishlistItems) {
-        await removeFromWishlist(item.sku, window.jwtNotBearer)
+        await removeFromWishlist(item.sku, window.jwt)
     }
     location.reload()
 })
 
 // AddEventListener "add all to cart" button 
 document.querySelector('#add-all-wishlist-btn').addEventListener('click', async () => {
-    const wishlistItems = await fetchWishlistItems(window.userId, window.jwtNotBearer)
+    const wishlistItems = await fetchWishlistItems(window.userId, window.jwt)
     wishlistItems.forEach(item => {
         // Add to cart logic here
         console.log(`Added to cart: ${item.sku}`)
         // Remove from wishlist
-        removeFromWishlist(item.sku, window.jwtNotBearer)
+        removeFromWishlist(item.sku, window.jwt)
     })
     location.reload()
 })

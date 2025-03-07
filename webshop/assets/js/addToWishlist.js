@@ -27,7 +27,7 @@ const skuCodes = ["123-ABC", "456-DEF", "789-GHI", "321-JKL", "654-MNO"]
 // Add eventlisteners to ADD to WISHLIST buttons 
 document.querySelectorAll(".btn-add-wishlist").forEach((button, index) => {
     button.addEventListener("click", function() {
-        addItemToWishlist(skuCodes[index], window.jwtNotBearer)
+        addItemToWishlist(skuCodes[index], window.jwt)
         handleToast("Lager")
     })
 })
