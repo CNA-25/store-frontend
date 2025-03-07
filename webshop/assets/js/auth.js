@@ -19,5 +19,3 @@ if (!window.userId) {
 if (!window.userId) {
     console.error("User ID could not be extracted from JWT")
 }
-// Remove the 'Bearer ' part (space included)
-window.jwtNotBearer = window.jwt.replace('Bearer ', '')
