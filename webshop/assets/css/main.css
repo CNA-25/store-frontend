@@ -1,6 +1,11 @@
+/* GENERAL */
 body {
     background-color: #DBA058;
     font-family: 'Rubik-font';
+}
+
+.title-h1 {
+    margin: 1rem;
 }
 
 button {
@@ -51,7 +56,7 @@ button {
     justify-content: center;
     align-items: center;
 }
-.product-card {  /* assuming this is your container class */
+.product-card { 
     display: flex;
     flex-direction: row; 
     align-items: center;

@@ -23,7 +23,6 @@ async function createCartItemUI(userId, productId, quantity, jwt) {
     if (!cachedProducts) {
         cachedProducts = await fetchProductData();
     }
-    //console.log(cachedProducts)
     
     // Find the product details by ID
     const productDetails = cachedProducts.find(product => product.id == productId)
@@ -143,12 +142,12 @@ function clearCartUI() {
     // get the cart list element
     const bsList = document.querySelector("#cart-items-container ol")
     // create image element and append to the list
-    bsList.innerHTML = ""; // Clear the list
+    bsList.innerHTML = ""; 
     const img = document.createElement("img")
-    img.src = "/webshop/assets/images/empty_beer_beach_small.jpg"
-    img.alt = "Empty Cart"; // Optional: Add alt text
-    img.style.width = "100%"; // Adjust size if needed
-    bsList.appendChild(img);
+    img.src = "/webshop/assets/images/empty_beer.jpg"
+    img.alt = "Empty Cart"; 
+    img.style.width = "60%";  
+    document.querySelector("#cart-container").appendChild(img);
     //change title to empty cart
     const title = document.querySelector(".flex-container h1")
     title.innerHTML = "Empty Cart"
@@ -175,3 +174,46 @@ async function initializeCart(userId, jwt) {
 
 // Run the initialization function when the script loads
 initializeCart(window.userId, window.jwt)
+
+// last chance product cards
+fetchProductData().then(products => {
+    // Select 3 random products
+    const lastChanceProducts = products
+    .sort(() => Math.random() - 0.5) // Shuffle the array
+    .slice(0, 3); // Select the first 3 items
+    // random sales pitch
+    const beerSalesPitches = [
+        "Your fridge isn't full—it's just understocked! 🍻",
+        "Beer doesn't take up space, it creates memories! 🎉",
+        "A six-pack today saves a sad fridge tomorrow! 🏆",
+        "Last chance? More like best chance—to grab more beer! 🚀",
+        "Running out of beer is a choice. Don't make that mistake! 🤦‍♂️",
+        "Your future self will thank you for this extra round! 🔄",
+        "There's always space for one more... or three! 🍺🍺🍺"
+    ]
+    const randomPitch = beerSalesPitches[Math.floor(Math.random() * beerSalesPitches.length)];
+    document.querySelector("#last-chance-title").textContent = randomPitch
+
+    // Create a card for each product    
+    lastChanceProducts.forEach(async product => {
+        const productCard = await createLastChanceProductCard(product)
+        document.querySelector("#last-chance-products").appendChild(productCard)
+    })
+})
+async function createLastChanceProductCard(product) {
+    const productCard = document.createElement("div")
+    productCard.className = "product-card"
+    document.querySelector("#last-chance-products").innerHTML = ""
+    productCard.innerHTML = `
+        <div id="${product.sku}">
+            <h2>${product.name}</h2>
+            <p>${product.price}€</p>
+            <p>Info:</p>
+            <p class="product-card-text">${product.description}</p>
+            <p>${product.category}, ${product.country}</p>
+            <button class="btn btn-success" onclick="addItemToCart('${window.userId}', '${product.id}', '${window.jwt}')">Add to Cart</button>
+        </div>
+        <img class="product-image" src="https://product-service-cna-product-service.2.rahtiapp.fi${product.image}" alt="Product Image">
+    `
+    return productCard
+}

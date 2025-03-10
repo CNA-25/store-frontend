@@ -3,6 +3,8 @@
     flex-direction: column;
     width: 70%;
     margin: auto;
+    align-items: center;
+    justify-content: center;
 }
 
 #cart-items-container {
