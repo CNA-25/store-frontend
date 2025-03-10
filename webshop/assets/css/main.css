@@ -66,8 +66,9 @@ button {
 .product-image {
     margin-left: auto;
     max-width: 6rem;
-    max-height: 10rem;
+    height: 10rem;
     object-fit: contain;
+    border-radius: 10%;
 }
 .product-card-text {
     max-width: 15rem;

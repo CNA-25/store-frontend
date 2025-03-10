@@ -3,7 +3,7 @@ console.log("addToWishlist.js")
 
 // function to make API call ADD to WISHLIST
 async function addItemToWishlist(sku, jwt) {
-    // LIVE URL = `http://localhost:8001/wishlist/${sku}`
+    // LIVE URL = `http://localhost:8000/wishlist/${sku}`
     const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${sku}`
     
     const response = await fetch(url, {

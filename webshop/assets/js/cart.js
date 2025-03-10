@@ -7,7 +7,7 @@ async function fetchProductData() {
     try {
         const resp = await fetch(URL)
         const data = await resp.json()
-        console.log(data.msg)
+        //console.log(data.msg)
         return data.products
     } catch (error) {
         console.log('Failed to fetch product data', error)
@@ -23,7 +23,7 @@ async function createCartItemUI(userId, productId, quantity, jwt) {
     if (!cachedProducts) {
         cachedProducts = await fetchProductData();
     }
-    console.log(cachedProducts)
+    //console.log(cachedProducts)
     
     // Find the product details by ID
     const productDetails = cachedProducts.find(product => product.id == productId)
@@ -86,7 +86,7 @@ async function fetchCartItems(userId, jwt) {
 async function addCartItems(userId, jwt) {
     try {
         const cartItems = await fetchCartItems(userId, jwt)
-        console.log(cartItems)
+        //console.log(cartItems)
         cartItems.forEach(item => {
             createCartItemUI(userId, item.product_id, item.quantity, jwt)
         })
