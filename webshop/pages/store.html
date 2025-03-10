@@ -20,8 +20,23 @@
         </header>
         <!-- Site Content -->
         <div class="flex-container">
-            <h1>Store</h1>
+            <h1>Our Products</h1>
             <div id="products">Loading Products...</div>
+        </div>
+
+        <!-- toast(pop up window feedback) for adding item to cart-->
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">
+                    <img src="..." class="rounded me-2" alt="">
+                    <strong class="me-auto">Shopping Cart</strong>
+                    <small>Just now</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                    Item added to cart.
+                </div>
+            </div>
         </div>
 
         

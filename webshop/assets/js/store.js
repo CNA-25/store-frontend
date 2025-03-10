@@ -17,7 +17,7 @@ async function showProducts(userId, jwt) {
     for (product of data.products) {
         outputString += `
             <div id="${product.sku}">
-                <p>----------</p>
+                <hr>
                 <p>${product.name}</p>
                 <img src="${product.image}" alt="Product Image" >
                 <p>${product.price}€</p>

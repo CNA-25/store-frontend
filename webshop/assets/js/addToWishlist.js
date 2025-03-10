@@ -21,24 +21,12 @@ async function addItemToWishlist(sku, jwt) {
     return response.json() // Return the response data
 }
 
-// hardcoded beers sku codes
-const skuCodes = ["123-ABC", "456-DEF", "789-GHI", "321-JKL", "654-MNO"]
-
-// Add eventlisteners to ADD to WISHLIST buttons 
-document.querySelectorAll(".btn-add-wishlist").forEach((button, index) => {
-    button.addEventListener("click", function() {
-        addItemToWishlist(skuCodes[index], window.jwt)
-        handleToast("Lager")
-    })
-})
-
 // function to handle toast notification for adding to wishlist
-function handleToast(beer) {
-    const toastTrigger = beer
-    const toastLiveExample = document.getElementById('liveToast')
-
-    if (toastTrigger) {
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+function handleToast(productId) {
+    const toast = document.getElementById('liveToast')
+    // show toast
+    if (productId) {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast)
         toastBootstrap.show()
     }
 }

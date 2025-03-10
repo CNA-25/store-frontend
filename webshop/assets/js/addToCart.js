@@ -12,13 +12,33 @@ async function addItemToCart(userId, productId, jwt, quantity = 1) {
             'token': `${jwt}`, // Send token in header
             'Content-Type': 'application/json'
         }
-    });
+    })
 
     if (!response.ok) {
         const errorData = await response.json()
-        throw new Error(`Failed to add item: ${response.statusText} - ${JSON.stringify(errorData)}`)
+        //console.error(errorData)
+        // USE PATCH METHOD TO UPDATE QUANTITY IF ITEM ALREADY IN CART
+        if (errorData.detail === "Item already in cart. To update quantity use appropriate endpoint.") {
+            console.warn("Item already in cart, updating quantity...")
+
+            // LOCAL URL = `http://localhost:8000/cart/${userId}/${productId}`
+            const updateItemUrl = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/${userId}/${productId}/{quantity}?quantity_change=${quantity}`
+            
+            // Now call the update endpoint
+            let updateResponse = await fetch(updateItemUrl, {
+                method: "PATCH", // Change to correct method if needed
+                headers: {
+                        "Content-Type": "application/json", 
+                        "token": `${jwt}`
+                }
+            })
+            if (updateResponse.ok) {
+                console.log("Item quantity updated.")
+            }
+
+            if (!updateResponse.ok) {
+                throw new Error("Failed to update item quantity.")
+            }
+        }
     }
-
-    return response.json() // Return the response data
 }
-
