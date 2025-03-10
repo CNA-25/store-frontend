@@ -42,6 +42,21 @@ button {
     margin-right: 2rem;
 }
 
+/* PRODUCT CARDS */
+.product-card {  /* assuming this is your container class */
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+}
+.product-image {
+    margin-left: auto;
+    margin-right: 6rem;
+    max-width: 6rem;
+    max-height: 10rem;
+    object-fit: contain;
+}
+
 /* FONTS */
 
 @font-face {

@@ -16,17 +16,19 @@ async function showProducts(userId, jwt) {
 
     for (product of data.products) {
         outputString += `
-            <div id="${product.sku}">
-                <hr>
-                <p>${product.name}</p>
-                <img src="${product.image}" alt="Product Image" >
-                <p>${product.price}€</p>
-                <p>Info:</p>
-                <p>${product.description}</p>
-                <p>${product.category}, ${product.country}</p>
-                <button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}'); handleToast('${product.name}', 'cart')">Add to Cart</button>
-                <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}'); handleToast('${product.name}', 'wishlist')">Add to Wishlist</button>
-            <div>
+            <div class="product-card">
+                <div id="${product.sku}">
+                    <hr>
+                    <p>${product.name}</p>
+                    <p>${product.price}€</p>
+                    <p>Info:</p>
+                    <p>${product.description}</p>
+                    <p>${product.category}, ${product.country}</p>
+                    <button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}'); handleToast('${product.name}', 'cart')">Add to Cart</button>
+                    <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}'); handleToast('${product.name}', 'wishlist')">Add to Wishlist</button>
+                </div>
+                <img class="product-image" src="https://product-service-cna-product-service.2.rahtiapp.fi${product.image}" alt="Product Image">
+            </div>
         `;
 
     }
