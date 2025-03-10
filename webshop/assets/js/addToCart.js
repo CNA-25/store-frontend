@@ -42,3 +42,4 @@ async function addItemToCart(userId, productId, jwt, quantity = 1) {
         }
     }
 }
+

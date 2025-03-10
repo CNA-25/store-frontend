@@ -20,13 +20,3 @@ async function addItemToWishlist(sku, jwt) {
     }
     return response.json() // Return the response data
 }
-
-// function to handle toast notification for adding to wishlist
-function handleToast(productId) {
-    const toast = document.getElementById('liveToast')
-    // show toast
-    if (productId) {
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toast)
-        toastBootstrap.show()
-    }
-}

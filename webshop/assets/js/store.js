@@ -24,8 +24,8 @@ async function showProducts(userId, jwt) {
                 <p>Info:</p>
                 <p>${product.description}</p>
                 <p>${product.category}, ${product.country}</p>
-                <button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}')">Add to Cart</button>
-                <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}')">Add to Wishlist</button>
+                <button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}'); handleToast('${product.name}', 'cart')">Add to Cart</button>
+                <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}'); handleToast('${product.name}', 'wishlist')">Add to Wishlist</button>
             <div>
         `;
 
@@ -33,3 +33,27 @@ async function showProducts(userId, jwt) {
     document.querySelector('#products').innerHTML = outputString;
 }
 showProducts(window.userId, window.jwt);
+
+// function to handle toast notification for adding to wishlist
+function handleToast(productName, type) {
+    const toast = document.getElementById('liveToast')
+    if (toast && productName) {
+         
+        const toastBody = toast.querySelector('.toast-body')
+        const toastHeader = toast.querySelector('.me-auto')
+        // toast content
+        if (toastBody) {
+            toastBody.textContent = `${productName} added to ${type}.`
+        }
+        // toast header
+        if (toastHeader) {
+            toastHeader.textContent = type === 'cart' ? 'Shopping Cart' : 'Wishlist';
+        }
+        
+        // Get or create the toast instance and show it
+        const toastBootstrap = new bootstrap.Toast(toast)
+        toastBootstrap.show()
+    } else {
+        console.error('Toast element not found or product title is empty')
+    }
+}
