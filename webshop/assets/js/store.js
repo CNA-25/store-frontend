@@ -22,7 +22,7 @@ async function showProducts(userId, jwt) {
                     <p>${product.name}</p>
                     <p>${product.price}€</p>
                     <p>Info:</p>
-                    <p>${product.description}</p>
+                    <p class="product-card-text">${product.description}</p>
                     <p>${product.category}, ${product.country}</p>
                     <button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}'); handleToast('${product.name}', 'cart')">Add to Cart</button>
                     <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}'); handleToast('${product.name}', 'wishlist')">Add to Wishlist</button>

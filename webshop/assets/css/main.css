@@ -42,19 +42,33 @@ button {
     margin-right: 2rem;
 }
 
-/* PRODUCT CARDS */
+/* PRODUCTS AND PRODUCT CARDS */
+#products {
+    max-width: 80%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
 .product-card {  /* assuming this is your container class */
     display: flex;
     flex-direction: row; 
     align-items: center;
     justify-content: space-between;
+    width: 20rem;
+    height: 30rem;
+    margin: 2rem;
 }
 .product-image {
     margin-left: auto;
-    margin-right: 6rem;
     max-width: 6rem;
     max-height: 10rem;
     object-fit: contain;
+}
+.product-card-text {
+    max-width: 15rem;
+    font-style: italic;
 }
 
 /* FONTS */
