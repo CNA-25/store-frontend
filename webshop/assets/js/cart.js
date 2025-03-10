@@ -1,15 +1,45 @@
 console.log("cart.js");
 // API ADDRESS: https://cart-service-git-cart-service.2.rahtiapp.fi/
 
+// Function to fetch all product data
+async function fetchProductData() {
+    const URL = 'https://product-service-cna-product-service.2.rahtiapp.fi/products'
+    try {
+        const resp = await fetch(URL)
+        const data = await resp.json()
+        console.log(data.msg)
+        return data.products
+    } catch (error) {
+        console.log('Failed to fetch product data', error)
+        return []
+    }
+}
+
+let cachedProducts = null
+
 // Function to create a cart item UI element
-function createCartItemUI(userId, productId, quantity, jwt) {
+async function createCartItemUI(userId, productId, quantity, jwt) {
+    // fetch items if not in cache
+    if (!cachedProducts) {
+        cachedProducts = await fetchProductData();
+    }
+    console.log(cachedProducts)
+    
+    // Find the product details by ID
+    const productDetails = cachedProducts.find(product => product.id == productId)
+    if (!productDetails) {
+        console.error(`Product with ID ${productId} not found.`)
+        return
+    }
+
     const bsList = document.querySelector("#cart-items-container ol")
     const listItem = document.createElement("li")
     listItem.className = "list-group-item d-flex justify-content-between align-items-start"
+    // create HTML content 
     listItem.innerHTML = `
         <div class="ms-2 me-auto">
-            <div class="fw-bold">${productId}</div>
-            ${productId}
+            <div class="fw-bold">${productDetails.name}</div>
+            ${productDetails.description}
         </div>
         <button class="btn btn-danger remove-item-cart-btn">Remove</button>
         <span class="badge text-bg-primary rounded-pill">${quantity}</span>
