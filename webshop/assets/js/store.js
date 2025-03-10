@@ -1,5 +1,5 @@
 async function showProducts() {
-    const URL = 'https://product-service-cna-product-service.2.rahtiapp.fi/products';
+    const URL = 'https://product-service-cna-product-service.2.rahtiapp.fi';
     try {
         await fetch(URL);
     } catch (error) {
@@ -7,7 +7,7 @@ async function showProducts() {
         document.querySelector('#output').innerHTML = "<p>Failed to fetch API</p>";
         return;
     }
-    const resp = await fetch(URL);
+    const resp = await fetch(`${URL}/products`);
     const data = await resp.json();
     console.log(data.msg);
 
@@ -19,7 +19,7 @@ async function showProducts() {
             <div id="${product.sku}">
                 <p>----------</p>
                 <p>${product.name}</p>
-                <img src="${product.image}" alt="Product Image" >
+                <img src="${URL}${product.image}" alt="Product Image" width="100" height="200">
                 <p>${product.price}€</p>
                 <p>Info:</p>
                 <p>${product.description}</p>
