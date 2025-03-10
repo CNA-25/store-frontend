@@ -59,6 +59,9 @@ button {
     width: 20rem;
     height: 30rem;
     margin: 2rem;
+    background-color: #E5C7A1;
+    border-radius: 5%;
+    padding: 1rem;
 }
 .product-image {
     margin-left: auto;
@@ -68,7 +71,10 @@ button {
 }
 .product-card-text {
     max-width: 15rem;
+    max-height: 8rem;
     font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* FONTS */

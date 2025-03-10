@@ -18,8 +18,7 @@ async function showProducts(userId, jwt) {
         outputString += `
             <div class="product-card">
                 <div id="${product.sku}">
-                    <hr>
-                    <p>${product.name}</p>
+                    <h2>${product.name}</h2>
                     <p>${product.price}€</p>
                     <p>Info:</p>
                     <p class="product-card-text">${product.description}</p>
