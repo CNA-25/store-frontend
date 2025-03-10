@@ -7,7 +7,7 @@ button {
     margin: 0.5rem;
 }
 
-.title-container {
+.flex-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,7 +18,7 @@ button {
     justify-content: center;
 }
 
-/* HEADER */
+/* TOP NAVBAR */
 .header {
     display: flex;
     flex-direction: row;
@@ -40,83 +40,6 @@ button {
 }
 #wishlist-icon {
     margin-right: 2rem;
-}
-
-/* DISPLAY/BUY BEERS */
-#flex-beers-container {
-    display: flex;
-    justify-content: space-evenly;
-}
-.beer-container {
-    display:flex;
-    flex-direction: column;
-}
-.flexed-beers {
-    height: 250px;
-    width: 200px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    font-size: 1.5rem;
-}
-.flexed-beers > p {
-    opacity: 0;
-}
-.flexed-beers:hover > p {
-    opacity: 1;
-}
-.flexed-beers:hover {
-    color: #fff;
-}
-.flexed-beers:active {
-    transform: scale(0.9);
-}
-
-#saunaSessionAle {
-    background-image: url("/webshop/assets/images/Sauna\ Session\ ale3.jpg");
-    background-size: cover;
-}
-#saunaSessionAle:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Sauna\ Session\ ale3.jpg")
-}
-#midsummerWheat {
-    background-image: url("/webshop/assets/images/Midsummer\ Wheat1.jpg");
-    background-size: cover;
-}
-#midsummerWheat:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Midsummer\ Wheat1.jpg")
-}
-#midnightBlackIPA {
-    background-image: url("/webshop/assets/images/Lapland\ Midnight\ Black\ IPA2.jpg");
-    background-size: cover;
-}
-#midnightBlackIPA:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Lapland\ Midnight\ Black\ IPA2.jpg")
-}
-
-/* BUY 100 BEERS BUTTON */
-#big-buy-btn-container {
-    display: flex;
-    justify-content: center;
-}
-.custom-btn-big {
-    background-color: #6E3518;
-    color: #fff;
-    font-family: 'Rubik-font';
-    font-size: 2rem;
-    margin: 2rem;
-}
-.custom-btn-big:hover {
-    background-color: #C95E20;
-    color: #fff;
-}
-.custom-btn-big:active {
-    background-color: #130D08 !important;
-    transform: scale(0.95);
-    color: #fff;
 }
 
 /* FONTS */
