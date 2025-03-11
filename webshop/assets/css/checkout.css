@@ -1,12 +1,4 @@
-/* 
-background color: #09090b
-highilight color: #f97316
-hover:  #9a3412
-*/
-
 body {
-    background-color: #09090b;
-    color: #f97316;
     font-family: Arial, sans-serif;
     text-align: center;
     display: flex;
@@ -17,44 +9,114 @@ body {
     margin: 0;
 }
 
+
 h1, h3 {
-    color: #f97316;
+    color: #301E10;
     margin-bottom: 10px;
 }
 
+.container-flex {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px; 
+    width: 100%;
+    padding: 20px;
+    max-width: 1200px; 
+    flex-wrap: wrap; 
+}
+
+.cart-container {
+    width: 50%;
+    max-width: 500px; 
+    max-height: 400px;  
+    overflow-y: auto;   
+    padding: 10px;
+    margin-bottom: 20px;
+    flex: 1; 
+    position: relative; 
+}
+
+/* WebKit browsers (Chrome, Safari) */
+.cart-container::-webkit-scrollbar {
+    width: 12px;
+}
+
+.cart-container::-webkit-scrollbar-track {
+    background: #E5C7A1; 
+}
+
+.cart-container::-webkit-scrollbar-thumb {
+    background: #301E10; 
+    border-radius: 6px; 
+}
+
+.cart-container::-webkit-scrollbar-thumb:hover {
+    background: #9a3412; 
+}
+
+/* Firefox */
+.cart-container {
+    scrollbar-width: thin; 
+    scrollbar-color: #301E10 #E5C7A1; 
+    
+}
+
+#sum {
+    width: 100%;  
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px; 
+    color: #301E10;
+}
+
+
+
+/* Cart items styling */
+#cart-items-container {
+    width: 100%;
+    max-width: 600px;
+    text-align: left;
+}
+
+/* Checkout form styling */
 #checkout-form {
-    background-color: #1a1a1a;
+    background-color: #E5C7A1;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     width: 300px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 10px;
 }
 
+/* Input fields styling */
 input[type="email"], input[type="password"], input[type="text"] {
     width: 90%;
     padding: 10px;
     margin: 8px;
-    border: 2px solid #f97316;
+    border: 2px solid #301E10;
     border-radius: 5px;
-    background-color: #09090b;
-    color: #f97316;
+    background-color: #E5C7A1;
+    color: #301E10;
     outline: none;
     transition: 0.3s ease;
 }
 
 input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focus {
     border-color: #ffb84d;
-    box-shadow: 10px #f97316;
+    box-shadow: 0 0 10px #301E10;
 }
 
+/* Submit button styling */
 #btn-submit {
     width: 100%;
     padding: 10px;
-    background-color: #f97316;
-    color: #09090b;
+    background-color: #301E10;
+    color: #ffffff;
     border: none;
     border-radius: 5px;
     font-size: 16px;
@@ -68,7 +130,6 @@ input[type="email"]:focus, input[type="password"]:focus, input[type="text"]:focu
     color: #ffffff;
 }
 
-
 a {
     color: #f97316;
     text-decoration: none;
@@ -78,4 +139,21 @@ a {
 
 a:hover {
     color: #9a3412;
+}
+
+/* Optional: For better responsiveness on smaller screens */
+@media (max-width: 768px) {
+    .container-flex {
+        flex-direction: column; /* Stack the cart and form vertically on small screens */
+        align-items: stretch;
+    }
+
+    #cart-items-container, #checkout-form {
+        width: 100%; /* Full width on small screens */
+        max-width: none; /* Reset max-width for responsiveness */
+    }
+
+    #cart-items-container {
+        margin-bottom: 20px;
+    }
 }
