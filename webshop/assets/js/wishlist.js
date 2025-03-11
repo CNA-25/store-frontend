@@ -41,8 +41,9 @@ function createCartItem(userId, sku, jwt) {
 
 // Function to fetch wishlist items from the server
 async function fetchWishlistItems(userId, jwt) { 
-    // LOCAL API URL = `http://localhost:8001/wishlist/${userId}`
+    // LOCAL API URL = `http://localhost:8000/wishlist/${userId}`
     const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${userId}`
+    console.log(`Fetching wishlist items from URL: ${url}`)
     try {
         const response = await fetch(url, {
             method: 'GET',
@@ -55,6 +56,7 @@ async function fetchWishlistItems(userId, jwt) {
             throw new Error(`Failed to fetch wishlist items: ${response.statusText}`)
         }
         const data = await response.json()
+        console.log('Fetched wishlist items:', data)
         return data.wishlist
     } catch (error) {
         console.error('Error fetching wishlist items:', error)
@@ -65,7 +67,7 @@ async function fetchWishlistItems(userId, jwt) {
 // Function to add wishlist items to the list
 async function addWishlistItems(userId, jwt) {
     const wishlistItems = await fetchWishlistItems(userId, jwt)
-    console.log(wishlistItems)
+    //console.log(wishlistItems)
     wishlistItems.forEach(item => {
         createCartItem(userId, item.sku, jwt)
     })
@@ -75,7 +77,7 @@ addWishlistItems(window.userId, window.jwt)
 
 // Function to remove item from wishlist
 async function removeFromWishlist(sku, jwt) { 
-    // LOCAL API URL = `http://localhost:8001/wishlist/${sku}`
+    // LOCAL API URL = `http://localhost:8000/wishlist/${sku}`
     const url = `https://wishlist-git-wishlist.2.rahtiapp.fi/wishlist/${sku}`
     try {
         const response = await fetch(url, {
@@ -119,24 +121,3 @@ document.querySelector('#add-all-wishlist-btn').addEventListener('click', async 
     })
     location.reload()
 })
-
-// Function to add to cart with API fetch
-async function addItemToCart(userId, productId, jwt, quantity = 1) {
-    // LOCAL URL = `http://localhost:8000/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
-    const url = `https://cart-service-git-cart-service.2.rahtiapp.fi/cart/?user_id=${userId}&product_id=${productId}&quantity=${quantity}`
-
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            'token': `${jwt}`, // Send token in header
-            'Content-Type': 'application/json'
-        }
-    });
-
-    if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(`Failed to add item: ${response.statusText} - ${JSON.stringify(errorData)}`)
-    }
-
-    return response.json() // Return the response data
-}

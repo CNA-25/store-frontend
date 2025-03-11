@@ -1,4 +1,4 @@
-#cart-container {
+.cart-container {
     display: flex;
     flex-direction: column;
     width: 70%;
@@ -7,8 +7,12 @@
     justify-content: center;
 }
 
-#cart-items-container {
+.cart-container ol {
     
+}
+
+#cart-items-container {
+    width: 100%;
 }
 
 .cart-info {
