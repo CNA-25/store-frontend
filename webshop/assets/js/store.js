@@ -16,6 +16,14 @@ async function showProducts(userId, jwt) {
 
     for (product of data.products) {
         const safeProductName = product.name.replace(/'/g, "\'"); // Escape apostrophes
+
+        // Disable knappen if out of stock
+        var buttonString = `<button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}'); handleToast('${safeProductName}', 'cart')">Add to Cart</button>`
+        var stock = getStock(product.sku);
+        if (stock < 1) {
+            buttonString = `<button class="btn btn-secondary" disabled>Out of Stock</button>`
+        }
+
         outputString += `
             <div class="product-card">
                 <div id="${product.sku}">
@@ -24,17 +32,29 @@ async function showProducts(userId, jwt) {
                     <p>Info:</p>
                     <p class="product-card-text">${product.description}</p>
                     <p>${product.category}, ${product.country}</p>
-                    <button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}'); handleToast('${safeProductName}', 'cart')">Add to Cart</button>
+                    ${buttonString}
                     <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}'); handleToast('${safeProductName}', 'wishlist')">Add to Wishlist</button>
                 </div>
                 <img class="product-image" src="https://product-service-cna-product-service.2.rahtiapp.fi${product.image}" alt="Product Image">
             </div>
         `;
-
     }
     document.querySelector('#products').innerHTML = outputString;
 }
 showProducts(window.userId, window.jwt);
+
+// Check inventory
+async function getStock(sku) {
+    const url = ` https://inventory-service-inventory-service.2.rahtiapp.fi/inventory/?productCodes=${sku}`;
+    try {
+        const resp = await fetch(url);
+        const data = await resp.json();
+        return data[0].stock;
+    } catch (error) {
+        console.error(error)
+        return 0;
+    }
+}
 
 // function to handle toast notification for adding to wishlist
 function handleToast(productName, type) {
