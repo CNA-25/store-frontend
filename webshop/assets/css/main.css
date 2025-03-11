@@ -1,13 +1,18 @@
+/* GENERAL */
 body {
     background-color: #DBA058;
     font-family: 'Rubik-font';
+}
+
+.title-h1 {
+    margin: 1rem;
 }
 
 button {
     margin: 0.5rem;
 }
 
-.title-container {
+.flex-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -18,11 +23,12 @@ button {
     justify-content: center;
 }
 
-/* HEADER */
+/* TOP NAVBAR */
 .header {
     display: flex;
     flex-direction: row;
     background-color: #301E10;
+    min-width: 100%;
 }
 .header-menu-icons {
     font-size: 2rem;
@@ -42,81 +48,40 @@ button {
     margin-right: 2rem;
 }
 
-/* DISPLAY/BUY BEERS */
-#flex-beers-container {
+/* PRODUCTS AND PRODUCT CARDS */
+#products {
+    max-width: 80%;
     display: flex;
-    justify-content: space-evenly;
-}
-.beer-container {
-    display:flex;
-    flex-direction: column;
-}
-.flexed-beers {
-    height: 250px;
-    width: 200px;
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    font-size: 1.5rem;
 }
-.flexed-beers > p {
-    opacity: 0;
-}
-.flexed-beers:hover > p {
-    opacity: 1;
-}
-.flexed-beers:hover {
-    color: #fff;
-}
-.flexed-beers:active {
-    transform: scale(0.9);
-}
-
-#saunaSessionAle {
-    background-image: url("/webshop/assets/images/Sauna\ Session\ ale3.jpg");
-    background-size: cover;
-}
-#saunaSessionAle:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Sauna\ Session\ ale3.jpg")
-}
-#midsummerWheat {
-    background-image: url("/webshop/assets/images/Midsummer\ Wheat1.jpg");
-    background-size: cover;
-}
-#midsummerWheat:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Midsummer\ Wheat1.jpg")
-}
-#midnightBlackIPA {
-    background-image: url("/webshop/assets/images/Lapland\ Midnight\ Black\ IPA2.jpg");
-    background-size: cover;
-}
-#midnightBlackIPA:hover {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/webshop/assets/images/Lapland\ Midnight\ Black\ IPA2.jpg")
-}
-
-/* BUY 100 BEERS BUTTON */
-#big-buy-btn-container {
+.product-card { 
     display: flex;
-    justify-content: center;
-}
-.custom-btn-big {
-    background-color: #6E3518;
-    color: #fff;
-    font-family: 'Rubik-font';
-    font-size: 2rem;
+    flex-direction: row; 
+    align-items: center;
+    justify-content: space-between;
+    width: 20rem;
+    height: 30rem;
     margin: 2rem;
+    background-color: #E5C7A1;
+    border-radius: 5%;
+    padding: 1rem;
 }
-.custom-btn-big:hover {
-    background-color: #C95E20;
-    color: #fff;
+.product-image {
+    margin-left: auto;
+    max-width: 6rem;
+    height: 10rem;
+    object-fit: contain;
+    border-radius: 10%;
 }
-.custom-btn-big:active {
-    background-color: #130D08 !important;
-    transform: scale(0.95);
-    color: #fff;
+.product-card-text {
+    max-width: 15rem;
+    max-height: 8rem;
+    font-style: italic;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* FONTS */
