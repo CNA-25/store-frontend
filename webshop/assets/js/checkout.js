@@ -87,7 +87,7 @@ async function displayCartItems(sub, jwt) {
 
     cartItems.forEach(item => {
         // Find the product using the SKU and product_id
-        const product = products.find(p => p.sku === item.product_id);
+        const product = products.find(p => p.sku === item.sku);
         if (!product) {
             console.error(`Product with SKU ${item.product_id} not found.`);
             return;
