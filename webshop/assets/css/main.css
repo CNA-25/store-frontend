@@ -28,6 +28,7 @@ button {
     display: flex;
     flex-direction: row;
     background-color: #301E10;
+    min-width: 100%;
 }
 .header-menu-icons {
     font-size: 2rem;
