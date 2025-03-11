@@ -18,7 +18,7 @@ async function showProducts(userId, jwt) {
         const safeProductName = product.name.replace(/'/g, "\'"); // Escape apostrophes
 
         // Disable knappen if out of stock
-        var buttonString = `<button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.id}', '${jwt}'); handleToast('${safeProductName}', 'cart')">Add to Cart</button>`
+        var buttonString = `<button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.sku}', '${jwt}'); handleToast('${safeProductName}', 'cart')">Add to Cart</button>`
         var stock = getStock(product.sku);
         if (stock < 1) {
             buttonString = `<button class="btn btn-secondary" disabled>Out of Stock</button>`
