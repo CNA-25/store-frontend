@@ -25,7 +25,7 @@ async function createCartItemUI(userId, productId, quantity, jwt) {
     }
     
     // Find the product details by ID
-    const productDetails = cachedProducts.find(product => product.id == productId)
+    const productDetails = cachedProducts.find(product => product.sku == productId)
     if (!productDetails) {
         console.error(`Product with ID ${productId} not found.`)
         return
