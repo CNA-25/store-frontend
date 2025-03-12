@@ -89,7 +89,6 @@ async function addCartItems(userId, jwt) {
         cartItems.forEach(item => {
             createCartItemUI(userId, item.product_id, item.quantity, jwt)
         })
-        initializeCart(userId, jwt)
         return cartItems
     } catch (error) {
         return undefined
