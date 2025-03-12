@@ -147,7 +147,7 @@ function clearCartUI() {
     img.src = "/webshop/assets/images/empty_beer.jpg"
     img.alt = "Empty Cart"; 
     img.style.width = "60%";  
-    document.querySelector("#cart-container").appendChild(img);
+    document.querySelector(".cart-container").appendChild(img);
     //change title to empty cart
     const title = document.querySelector(".flex-container h1")
     title.innerHTML = "Empty Cart"
