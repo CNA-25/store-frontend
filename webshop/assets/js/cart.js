@@ -211,7 +211,7 @@ async function createLastChanceProductCard(product) {
             <p>Info:</p>
             <p class="product-card-text">${product.description}</p>
             <p>${product.category}, ${product.country}</p>
-            <button class="btn btn-success" onclick="addItemToCart('${window.userId}', '${product.id}', '${window.jwt}')">Add to Cart</button>
+            <button class="btn btn-success" onclick="addItemToCart('${window.userId}', '${product.sku}', '${window.jwt}')">Add to Cart</button>
         </div>
         <img class="product-image" src="https://product-service-cna-product-service.2.rahtiapp.fi${product.image}" alt="Product Image">
     `
