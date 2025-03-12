@@ -15,10 +15,12 @@ async function showProducts(userId, jwt) {
     var outputString = ``;
 
     for (product of data.products) {
-        const safeProductName = product.name.replace(/'/g, "\'"); // Escape apostrophes
-
+        // TO DO: better solution than "Product"
+        //const safeProductName = product.name.replace(/'/g, "\\'"); // Escape apostrophes
+        const safeProductName = product.name
+        
         // Disable knappen if out of stock
-        var buttonString = `<button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.sku}', '${jwt}'); handleToast('${safeProductName}', 'cart')">Add to Cart</button>`
+        var buttonString = `<button class="btn btn-success" onclick="addItemToCart('${userId}', '${product.sku}', '${jwt}'); handleToast('Product', 'cart')">Add to Cart</button>`
         var stock = getStock(product.sku);
         if (stock < 1) {
             buttonString = `<button class="btn btn-secondary" disabled>Out of Stock</button>`
@@ -33,7 +35,7 @@ async function showProducts(userId, jwt) {
                     <p class="product-card-text">${product.description}</p>
                     <p>${product.category}, ${product.country}</p>
                     ${buttonString}
-                    <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}'); handleToast('${safeProductName}', 'wishlist')">Add to Wishlist</button>
+                    <button class="btn btn-secondary" onclick="addItemToWishlist('${product.sku}', '${jwt}'); handleToast('Product', 'wishlist')">Add to Wishlist</button>
                 </div>
                 <img class="product-image" src="https://product-service-cna-product-service.2.rahtiapp.fi${product.image}" alt="Product Image">
             </div>
